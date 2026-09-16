@@ -4,11 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Блогер 3.0</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;font-family:-apple-system,"Segoe UI",Roboto,sans-serif}
-body{background:radial-gradient(circle at 20% 0%,#2b1055,#0b0416 60%);color:#fff;min-height:100vh;overflow-x:hidden}
-#app{max-width:560px;margin:0 auto;padding:8px 10px 84px}
+body{background:radial-gradient(circle at 20% 0%,#2b1055,#0b0416 60%);color:#fff;min-height:100vh;overflow-x:hidden;padding-bottom:env(safe-area-inset-bottom)}
+#app{max-width:560px;margin:0 auto;padding:8px 10px 100px}
 .hud{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px}
 .stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:7px 9px}
 .stat .lbl{font-size:9px;opacity:.55;text-transform:uppercase;letter-spacing:.5px}
@@ -17,8 +18,8 @@ body{background:radial-gradient(circle at 20% 0%,#2b1055,#0b0416 60%);color:#fff
 .ebar{height:7px;background:rgba(255,255,255,.1);border-radius:6px;overflow:hidden;margin-bottom:4px}
 .efill{height:100%;background:linear-gradient(90deg,#00d4ff,#7d5cff);transition:width .1s linear;border-radius:6px}
 .elbl{font-size:10px;opacity:.55;text-align:right;margin-bottom:8px}
-.view{display:none;animation:fade .25s}.view.active{display:block}
-@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.view{display:none}
+.view.active{display:block}
 .scene-wrap{position:relative;width:100%;aspect-ratio:400/360;border-radius:18px;overflow:hidden;box-shadow:0 8px 30px rgba(125,92,255,.35),inset 0 0 0 1px rgba(255,255,255,.08);margin-bottom:10px;background:#05020a;touch-action:manipulation;cursor:pointer;transition:transform .08s}
 .scene-wrap:active{transform:scale(.985)}
 #scene{width:100%;height:100%;display:block;pointer-events:none}
@@ -26,14 +27,13 @@ body{background:radial-gradient(circle at 20% 0%,#2b1055,#0b0416 60%);color:#fff
 @keyframes floatUp{0%{opacity:1;transform:translate(-50%,0) scale(1)}100%{opacity:0;transform:translate(-50%,-100px) scale(1.35)}}
 .hint{font-size:12px;opacity:.6;margin-bottom:10px;text-align:center}
 .combo{font-size:20px;font-weight:800;color:#ffd76e;text-shadow:0 0 14px rgba(255,215,110,.9);height:24px;margin:0 0 6px;text-align:center}
-.btn{width:100%;padding:12px;border:none;border-radius:12px;background:linear-gradient(135deg,#ff4ec4,#7d5cff);color:#fff;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 5px 16px rgba(255,78,196,.3);margin-bottom:9px}
+.btn{width:100%;padding:14px 12px;border:none;border-radius:12px;background:linear-gradient(135deg,#ff4ec4,#7d5cff);color:#fff;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 5px 16px rgba(255,78,196,.3);margin-bottom:9px;touch-action:manipulation;-webkit-appearance:none}
 .btn:disabled{opacity:.32;box-shadow:none}
 .btn.active{background:linear-gradient(135deg,#00d4ff,#7d5cff)}
 .btn.alt{background:linear-gradient(135deg,#7dff9b,#00d4ff);color:#062}
 .btn.danger{background:linear-gradient(135deg,#ff4e4e,#ff9d4e)}
 .sec{font-size:12px;text-transform:uppercase;letter-spacing:1px;opacity:.5;margin:14px 0 8px;font-weight:700}
-.up{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:10px;cursor:pointer;transition:.12s;margin-bottom:7px}
-.up:active{transform:scale(.98)}
+.up{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:12px 10px;cursor:pointer;margin-bottom:7px;touch-action:manipulation}
 .up.can{border-color:rgba(125,255,155,.55);background:rgba(125,255,155,.08)}
 .up.lock{opacity:.42}
 .up.owned{border-color:rgba(255,215,110,.5);background:rgba(255,215,110,.08);opacity:.85;cursor:default}
@@ -49,12 +49,13 @@ body{background:radial-gradient(circle at 20% 0%,#2b1055,#0b0416 60%);color:#fff
 .ach .n{font-weight:700;font-size:12.5px}.ach .d{font-size:10.5px;opacity:.7}
 #log{font-size:11.5px;line-height:1.55;max-height:150px;overflow:hidden;margin-top:6px}
 #log div{padding:2px 0}
-#tabs{position:fixed;bottom:0;left:0;right:0;background:rgba(11,4,22,.96);border-top:1px solid rgba(255,255,255,.09);display:flex;justify-content:space-around;padding:6px 0 10px;backdrop-filter:blur(12px);z-index:50;max-width:560px;margin:0 auto}
-#tabs .tab{flex:1;min-width:40px;text-align:center;padding:4px 1px;cursor:pointer;opacity:.5;transition:.15s}
-#tabs .tab.on{opacity:1;transform:translateY(-2px)}
-#tabs .tab .i{font-size:18px;display:block}
-#tabs .tab .l{font-size:8.5px;margin-top:1px;font-weight:600}
-#popup{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:100;padding:20px;backdrop-filter:blur(6px)}
+#tabs{position:fixed;bottom:0;left:0;right:0;background:rgba(11,4,22,.97);border-top:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-around;padding:8px 0 calc(12px + env(safe-area-inset-bottom));backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:50;max-width:560px;margin:0 auto}
+#tabs .tab{flex:1;min-width:40px;text-align:center;padding:8px 2px;cursor:pointer;opacity:.55;transition:opacity .15s;touch-action:manipulation;position:relative}
+#tabs .tab.on{opacity:1}
+#tabs .tab.on::before{content:'';position:absolute;top:-2px;left:50%;transform:translateX(-50%);width:24px;height:3px;background:linear-gradient(90deg,#ff4ec4,#7d5cff);border-radius:2px}
+#tabs .tab .i{font-size:20px;display:block;pointer-events:none}
+#tabs .tab .l{font-size:9px;margin-top:2px;font-weight:600;pointer-events:none}
+#popup{position:fixed;inset:0;background:rgba(0,0,0,.78);display:none;align-items:center;justify-content:center;z-index:100;padding:20px;backdrop-filter:blur(6px)}
 #popup.show{display:flex}
 .pop{background:linear-gradient(160deg,#2b1055,#160a2b);border:1px solid rgba(255,255,255,.15);border-radius:18px;padding:22px;max-width:340px;width:100%;text-align:center}
 .pop h2{font-size:20px;margin-bottom:8px}.pop p{font-size:13.5px;opacity:.85;line-height:1.5;margin-bottom:16px}
@@ -122,55 +123,35 @@ body{background:radial-gradient(circle at 20% 0%,#2b1055,#0b0416 60%);color:#fff
           </linearGradient>
         </defs>
 
-        <!-- CEILING -->
         <rect x="0" y="0" width="400" height="20" fill="#05020a"/>
         <rect x="0" y="18" width="400" height="3" fill="#1a0f2a"/>
-        <!-- LED STRIP -->
         <g id="s-led" style="display:none">
           <rect x="10" y="20" width="380" height="4" rx="2" fill="url(#ledGrad)"/>
           <rect x="10" y="24" width="380" height="18" fill="url(#ledGrad)" opacity="0.3"/>
         </g>
 
-        <!-- WALL -->
         <rect x="0" y="22" width="400" height="210" fill="url(#wallGrad)"/>
-        <!-- Wallpaper subtle pattern -->
         <g opacity="0.04">
-          <circle cx="30" cy="60" r="2" fill="#fff"/>
-          <circle cx="70" cy="90" r="2" fill="#fff"/>
-          <circle cx="110" cy="60" r="2" fill="#fff"/>
-          <circle cx="150" cy="90" r="2" fill="#fff"/>
-          <circle cx="190" cy="60" r="2" fill="#fff"/>
-          <circle cx="270" cy="60" r="2" fill="#fff"/>
-          <circle cx="310" cy="90" r="2" fill="#fff"/>
-          <circle cx="350" cy="60" r="2" fill="#fff"/>
-          <circle cx="390" cy="90" r="2" fill="#fff"/>
+          <circle cx="30" cy="60" r="2" fill="#fff"/><circle cx="70" cy="90" r="2" fill="#fff"/>
+          <circle cx="110" cy="60" r="2" fill="#fff"/><circle cx="150" cy="90" r="2" fill="#fff"/>
+          <circle cx="190" cy="60" r="2" fill="#fff"/><circle cx="270" cy="60" r="2" fill="#fff"/>
+          <circle cx="310" cy="90" r="2" fill="#fff"/><circle cx="350" cy="60" r="2" fill="#fff"/>
         </g>
 
-        <!-- WINDOW (tier 2+) -->
         <g id="s-window" style="display:none">
           <rect x="14" y="40" width="118" height="150" rx="6" fill="#0a0a1e" stroke="#7a6a9a" stroke-width="5"/>
           <rect x="20" y="46" width="106" height="138" fill="url(#skyGrad)"/>
-          <!-- stars -->
           <g fill="#fff">
-            <circle cx="36" cy="60" r="1" opacity="0.9"/>
-            <circle cx="85" cy="58" r="1" opacity="0.9"/>
-            <circle cx="50" cy="78" r="0.8" opacity="0.7"/>
-            <circle cx="110" cy="70" r="0.8" opacity="0.8"/>
-            <circle cx="68" cy="52" r="0.6" opacity="0.6"/>
+            <circle cx="36" cy="60" r="1" opacity="0.9"/><circle cx="85" cy="58" r="1" opacity="0.9"/>
+            <circle cx="50" cy="78" r="0.8" opacity="0.7"/><circle cx="110" cy="70" r="0.8" opacity="0.8"/>
           </g>
-          <!-- Moon -->
           <circle cx="112" cy="72" r="9" fill="#ffe9a8"/>
           <circle cx="109" cy="69" r="9" fill="#1a1a4a"/>
-          <!-- Skyline layers -->
           <g fill="#0f0f30">
-            <rect x="22" y="145" width="10" height="39"/>
-            <rect x="34" y="125" width="13" height="59"/>
-            <rect x="50" y="150" width="8" height="34"/>
-            <rect x="60" y="132" width="11" height="52"/>
-            <rect x="74" y="142" width="9" height="42"/>
-            <rect x="86" y="126" width="13" height="58"/>
-            <rect x="102" y="145" width="10" height="39"/>
-            <rect x="115" y="138" width="11" height="46"/>
+            <rect x="22" y="145" width="10" height="39"/><rect x="34" y="125" width="13" height="59"/>
+            <rect x="50" y="150" width="8" height="34"/><rect x="60" y="132" width="11" height="52"/>
+            <rect x="74" y="142" width="9" height="42"/><rect x="86" y="126" width="13" height="58"/>
+            <rect x="102" y="145" width="10" height="39"/><rect x="115" y="138" width="11" height="46"/>
           </g>
           <g fill="#ffd76e" opacity="0.85">
             <circle cx="26" cy="152" r="0.7"/><circle cx="29" cy="158" r="0.7"/>
@@ -179,14 +160,10 @@ body{background:radial-gradient(circle at 20% 0%,#2b1055,#0b0416 60%);color:#fff
             <circle cx="90" cy="134" r="0.7"/><circle cx="94" cy="148" r="0.7"/>
             <circle cx="118" cy="146" r="0.7"/>
           </g>
-          <!-- street -->
           <rect x="20" y="180" width="106" height="4" fill="#050510"/>
-          <!-- CAR IN WINDOW -->
           <g id="s-carwin" style="display:none"></g>
-          <!-- window cross -->
           <line x1="73" y1="46" x2="73" y2="184" stroke="#7a6a9a" stroke-width="3"/>
           <line x1="20" y1="120" x2="126" y2="120" stroke="#7a6a9a" stroke-width="3"/>
-          <!-- sill -->
           <rect x="8" y="186" width="130" height="8" rx="2" fill="#7a6a9a"/>
           <g id="s-win-plant" style="display:none">
             <rect x="90" y="178" width="14" height="12" rx="2" fill="#8a5a3a"/>
@@ -197,7 +174,6 @@ body{background:radial-gradient(circle at 20% 0%,#2b1055,#0b0416 60%);color:#fff
           </g>
         </g>
 
-        <!-- POSTERS -->
         <g id="s-posters" style="display:none">
           <rect x="278" y="48" width="52" height="66" rx="3" fill="#4a2a6a" stroke="#7d5cff" stroke-width="2"/>
           <text x="304" y="76" text-anchor="middle" font-size="12" fill="#ffd76e" font-weight="bold">GOAL</text>
@@ -208,54 +184,35 @@ body{background:radial-gradient(circle at 20% 0%,#2b1055,#0b0416 60%);color:#fff
           <polygon points="354,72 354,84 366,78" fill="#fff"/>
         </g>
 
-        <!-- RGB / NIGHT light on wall (tier 5) -->
         <g id="s-wallglow" style="display:none">
           <ellipse cx="200" cy="100" rx="180" ry="90" fill="#7d5cff" opacity="0.08"/>
         </g>
 
-        <!-- WALL SHELF (tier 3+) -->
         <g id="s-shelf" style="display:none">
           <rect x="230" y="130" width="164" height="5" rx="2" fill="#7a5a3a"/>
           <rect x="230" y="135" width="164" height="3" fill="#4a3018" opacity="0.8"/>
-          <!-- books -->
           <rect x="238" y="110" width="8" height="20" fill="#7d5cff"/>
           <rect x="248" y="106" width="7" height="24" fill="#ff4ec4"/>
           <rect x="257" y="114" width="10" height="16" fill="#00d4ff"/>
           <rect x="269" y="108" width="6" height="22" fill="#ffd76e"/>
-          <!-- figurines -->
           <circle cx="290" cy="118" r="5" fill="#ff7dd6"/>
           <rect x="286" y="122" width="8" height="8" rx="2" fill="#ff7dd6"/>
           <rect x="306" y="118" width="9" height="12" rx="2" fill="#7dff9b"/>
           <circle cx="310.5" cy="115" r="4.5" fill="#7dff9b"/>
-          <!-- frame -->
           <rect x="330" y="100" width="34" height="30" rx="2" fill="#2a1a4a" stroke="#ffd76e" stroke-width="1.5"/>
           <text x="347" y="122" text-anchor="middle" font-size="14" fill="#ffd76e">★</text>
-          <!-- trophy -->
-          <rect x="372" y="118" width="10" height="12" rx="1" fill="#ffd76e"/>
-          <path d="M 372 118 Q 377 110 382 118" fill="#ffd76e"/>
         </g>
 
-        <!-- FLOOR -->
         <rect x="0" y="232" width="400" height="128" fill="url(#floorGrad)"/>
         <line x1="0" y1="232" x2="400" y2="232" stroke="#000" stroke-width="1.5" opacity="0.6"/>
-        <!-- floor reflection from LED -->
-        <g id="s-floor-reflect" style="display:none">
-          <rect x="10" y="233" width="380" height="8" fill="url(#ledGrad)" opacity="0.2"/>
-        </g>
 
-        <!-- CARPET -->
         <g id="s-carpet">
           <ellipse cx="200" cy="320" rx="190" ry="32" fill="url(#carpetGrad)"/>
           <ellipse cx="200" cy="320" rx="172" ry="26" fill="none" stroke="#ff4ec4" stroke-width="1.5" opacity="0.5"/>
           <ellipse cx="200" cy="320" rx="140" ry="18" fill="none" stroke="#7d5cff" stroke-width="1.5" opacity="0.5"/>
           <ellipse cx="200" cy="320" rx="95" ry="11" fill="none" stroke="#00d4ff" stroke-width="1.5" opacity="0.5"/>
-          <!-- diamond pattern -->
-          <path d="M 200 295 L 220 320 L 200 345 L 180 320 Z" fill="none" stroke="#ffd76e" stroke-width="0.8" opacity="0.3"/>
-          <path d="M 145 305 L 165 320 L 145 335 L 125 320 Z" fill="none" stroke="#ffd76e" stroke-width="0.8" opacity="0.25"/>
-          <path d="M 255 305 L 275 320 L 255 335 L 235 320 Z" fill="none" stroke="#ffd76e" stroke-width="0.8" opacity="0.25"/>
         </g>
 
-        <!-- FLOOR PLANTS -->
         <g id="s-plant-left" style="display:none">
           <ellipse cx="42" cy="248" rx="22" ry="6" fill="#000" opacity="0.4"/>
           <rect x="30" y="220" width="24" height="26" rx="4" fill="#8a5a3a"/>
@@ -264,7 +221,6 @@ body{background:radial-gradient(circle at 20% 0%,#2b1055,#0b0416 60%);color:#fff
           <ellipse cx="32" cy="200" rx="12" ry="10" fill="#2a8a3a"/>
           <ellipse cx="52" cy="201" rx="12" ry="10" fill="#2a8a3a"/>
           <ellipse cx="42" cy="194" rx="14" ry="11" fill="#3aaa4a"/>
-          <ellipse cx="36" cy="188" rx="8" ry="7" fill="#4aba5a"/>
         </g>
         <g id="s-plant-right" style="display:none">
           <ellipse cx="358" cy="248" rx="20" ry="6" fill="#000" opacity="0.4"/>
@@ -276,85 +232,57 @@ body{background:radial-gradient(circle at 20% 0%,#2b1055,#0b0416 60%);color:#fff
           <ellipse cx="359" cy="176" rx="8" ry="7" fill="#3aaa4a"/>
         </g>
 
-        <!-- AQUARIUM (tier 4) -->
         <g id="s-aquarium" style="display:none">
-          <rect x="20" y="176" width="60" height="42" rx="4" fill="#0a2a4a" stroke="#3a5a7a" stroke-width="2" opacity="0.95"/>
+          <rect x="20" y="176" width="60" height="42" rx="4" fill="#0a2a4a" stroke="#3a5a7a" stroke-width="2"/>
           <rect x="22" y="178" width="56" height="38" fill="#1a5a8a" opacity="0.6"/>
-          <!-- water plants -->
           <path d="M 30 214 Q 32 200 30 190 M 38 214 Q 40 202 42 192 M 52 214 Q 54 204 52 196" fill="none" stroke="#2a8a3a" stroke-width="2"/>
-          <!-- fish -->
-          <g>
-            <ellipse id="s-fish1" cx="45" cy="200" rx="6" ry="3.5" fill="#ff7dd6">
-              <animate attributeName="cx" values="32;58;32" dur="6s" repeatCount="indefinite"/>
-            </ellipse>
-            <polygon points="39,200 35,197 35,203" fill="#ff4ec4">
-              <animate attributeName="points" values="39,200 35,197 35,203;33,200 29,197 29,203;39,200 35,197 35,203" dur="6s" repeatCount="indefinite"/>
-            </polygon>
-          </g>
-          <g>
-            <ellipse id="s-fish2" cx="55" cy="208" rx="4" ry="2.5" fill="#00d4ff">
-              <animate attributeName="cx" values="58;30;58" dur="7s" repeatCount="indefinite"/>
-            </ellipse>
-          </g>
-          <!-- bubbles -->
+          <ellipse cx="45" cy="200" rx="6" ry="3.5" fill="#ff7dd6">
+            <animate attributeName="cx" values="32;58;32" dur="6s" repeatCount="indefinite"/>
+          </ellipse>
+          <ellipse cx="55" cy="208" rx="4" ry="2.5" fill="#00d4ff">
+            <animate attributeName="cx" values="58;30;58" dur="7s" repeatCount="indefinite"/>
+          </ellipse>
           <circle cx="36" cy="190" r="1" fill="#fff" opacity="0.6">
             <animate attributeName="cy" values="214;180" dur="3s" repeatCount="indefinite"/>
             <animate attributeName="opacity" values="0.8;0" dur="3s" repeatCount="indefinite"/>
           </circle>
-          <circle cx="50" cy="190" r="1" fill="#fff" opacity="0.6">
-            <animate attributeName="cy" values="214;180" dur="4s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0.8;0" dur="4s" repeatCount="indefinite"/>
-          </circle>
-          <!-- top rim -->
           <rect x="18" y="174" width="64" height="4" rx="1" fill="#3a5a7a"/>
         </g>
 
-        <!-- PET (tier 5) -->
         <g id="s-pet" style="display:none">
           <ellipse cx="90" cy="300" rx="20" ry="10" fill="#000" opacity="0.3"/>
           <ellipse cx="90" cy="294" rx="18" ry="10" fill="#3a3a3a"/>
           <circle cx="108" cy="292" r="7" fill="#3a3a3a"/>
-          <ellipse cx="110" cy="294" rx="4" ry="2" fill="#4a4a4a"/>
           <circle cx="110" cy="289" r="1.5" fill="#000"/>
           <circle cx="113" cy="289" r="1.5" fill="#000"/>
           <polygon points="104,286 106,281 108,286" fill="#3a3a3a"/>
           <polygon points="107,286 109,281 111,286" fill="#3a3a3a"/>
           <path d="M 72 294 Q 66 284 72 278" fill="none" stroke="#3a3a3a" stroke-width="3.5" stroke-linecap="round"/>
           <circle cx="111" cy="294" r="1.5" fill="#ff7dd6"/>
-          <circle cx="82" cy="290" r="3" fill="#1a1a1a" opacity="0.4"/>
         </g>
 
-        <!-- MONITOR GLOW -->
         <ellipse id="s-glow" cx="200" cy="180" rx="140" ry="95" fill="url(#monGlow)" opacity="0.7"/>
 
-        <!-- MONITORS -->
         <g id="s-mon1">
-          <!-- Main ultrawide monitor -->
           <rect x="170" y="112" width="60" height="128" rx="6" fill="#050510" stroke="#1a1a30" stroke-width="3"/>
           <rect x="173" y="115" width="54" height="122" rx="4" fill="#0a0a1a"/>
-          <!-- Screen content -->
           <rect x="178" y="122" width="44" height="8" fill="url(#ledGrad)" opacity="0.75"/>
           <rect x="178" y="134" width="30" height="4" fill="#7d5cff" opacity="0.65"/>
           <rect x="178" y="142" width="38" height="4" fill="#00d4ff" opacity="0.65"/>
           <rect x="178" y="150" width="22" height="4" fill="#ff4ec4" opacity="0.65"/>
-          <!-- fake chart -->
           <rect x="178" y="160" width="44" height="30" fill="rgba(0,212,255,0.08)"/>
           <polyline points="180,185 188,175 196,180 204,168 212,172 220,160" fill="none" stroke="#7dff9b" stroke-width="1.5"/>
           <rect x="178" y="195" width="42" height="4" fill="#7d5cff" opacity="0.5"/>
           <rect x="178" y="203" width="28" height="4" fill="#00d4ff" opacity="0.5"/>
           <rect x="178" y="211" width="38" height="4" fill="#ff4ec4" opacity="0.5"/>
           <rect x="178" y="219" width="20" height="4" fill="#7d5cff" opacity="0.5"/>
-          <rect x="178" y="227" width="34" height="4" fill="#00d4ff" opacity="0.5"/>
-          <!-- stand -->
           <rect x="193" y="240" width="14" height="18" fill="#1a1a30"/>
           <rect x="180" y="256" width="40" height="5" rx="2" fill="#1a1a30"/>
-          <!-- monitor back RGB -->
           <circle id="s-mon-rgb" cx="230" cy="120" r="2" fill="#ff4ec4" style="display:none">
             <animate attributeName="fill" values="#ff4ec4;#00d4ff;#7d5cff;#ff4ec4" dur="3s" repeatCount="indefinite"/>
           </circle>
         </g>
         <g id="s-mon2" style="display:none">
-          <!-- Left monitor -->
           <rect x="106" y="140" width="58" height="96" rx="4" fill="#050510" stroke="#1a1a30" stroke-width="2.5"/>
           <rect x="109" y="143" width="52" height="90" rx="2" fill="#0a0a1a"/>
           <rect x="113" y="148" width="44" height="8" fill="url(#ledGrad)" opacity="0.7"/>
@@ -363,12 +291,10 @@ body{background:radial-gradient(circle at 20% 0%,#2b1055,#0b0416 60%);color:#fff
           <rect x="113" y="176" width="24" height="4" fill="#ff4ec4" opacity="0.55"/>
           <rect x="113" y="190" width="42" height="26" fill="rgba(125,92,255,0.1)"/>
           <circle cx="134" cy="203" r="8" fill="none" stroke="#ffd76e" stroke-width="1.5"/>
-          <rect x="113" y="222" width="36" height="4" fill="#00d4ff" opacity="0.5"/>
           <rect x="128" y="236" width="10" height="14" fill="#1a1a30"/>
           <rect x="118" y="250" width="32" height="4" rx="1" fill="#1a1a30"/>
         </g>
         <g id="s-mon3" style="display:none">
-          <!-- Right monitor -->
           <rect x="236" y="140" width="58" height="96" rx="4" fill="#050510" stroke="#1a1a30" stroke-width="2.5"/>
           <rect x="239" y="143" width="52" height="90" rx="2" fill="#0a0a1a"/>
           <rect x="243" y="148" width="44" height="8" fill="url(#ledGrad)" opacity="0.7"/>
@@ -381,40 +307,26 @@ body{background:radial-gradient(circle at 20% 0%,#2b1055,#0b0416 60%);color:#fff
           <rect x="248" y="250" width="32" height="4" rx="1" fill="#1a1a30"/>
         </g>
 
-        <!-- CHAIR BACK -->
         <g id="s-chair-back">
           <rect x="166" y="208" width="68" height="90" rx="16" fill="url(#chairGrad)" stroke="#0a0510" stroke-width="2"/>
-          <!-- stitching -->
           <line x1="176" y1="220" x2="176" y2="280" stroke="#000" stroke-width="0.8" opacity="0.4"/>
           <line x1="224" y1="220" x2="224" y2="280" stroke="#000" stroke-width="0.8" opacity="0.4"/>
-          <line x1="186" y1="218" x2="214" y2="218" stroke="#000" stroke-width="0.8" opacity="0.3"/>
-          <!-- headrest -->
           <ellipse cx="200" cy="218" rx="26" ry="9" fill="#4a3a7a" opacity="0.7"/>
         </g>
 
-        <!-- CHARACTER -->
         <g id="s-char">
           <animateTransform attributeName="transform" type="translate" values="0 0;0 -2;0 0" dur="3.5s" repeatCount="indefinite"/>
-          <!-- shoulders/back -->
           <path d="M 158 226 Q 158 212 200 212 Q 242 212 242 226 L 252 300 L 148 300 Z" fill="#4a5a7a"/>
-          <!-- hood shadow -->
           <path d="M 158 226 Q 158 212 200 212 Q 242 212 242 226 L 240 240 Q 200 246 160 240 Z" fill="#3a4a6a" opacity="0.6"/>
-          <!-- arms -->
           <path d="M 168 240 Q 148 268 168 292" fill="none" stroke="#4a5a7a" stroke-width="15" stroke-linecap="round"/>
           <path d="M 232 240 Q 252 268 232 292" fill="none" stroke="#4a5a7a" stroke-width="15" stroke-linecap="round"/>
-          <!-- hands -->
           <ellipse cx="172" cy="290" rx="7" ry="5" fill="#e8b088"/>
           <ellipse cx="228" cy="290" rx="7" ry="5" fill="#e8b088"/>
-          <!-- neck -->
           <rect x="193" y="196" width="14" height="10" fill="#d8a078"/>
-          <!-- head -->
           <ellipse cx="200" cy="180" rx="23" ry="24" fill="#e8b088"/>
-          <!-- hair back -->
           <path d="M 175 178 Q 175 152 200 150 Q 225 152 225 178 Q 225 192 218 196 Q 200 200 182 196 Q 175 192 175 178 Z" fill="#2a1611"/>
           <path d="M 180 168 Q 188 160 200 160" fill="none" stroke="#4a2620" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-          <!-- hoodie collar -->
           <path d="M 175 200 Q 200 208 225 200" fill="#3a4a6a" opacity="0.9"/>
-          <!-- headphones -->
           <path d="M 172 172 Q 174 144 200 142 Q 226 144 228 172" fill="none" stroke="#1a1a2e" stroke-width="7" stroke-linecap="round"/>
           <rect x="164" y="164" width="14" height="26" rx="6" fill="#2a2a3e" stroke="#0a0a1a" stroke-width="1.2"/>
           <rect x="222" y="164" width="14" height="26" rx="6" fill="#2a2a3e" stroke="#0a0a1a" stroke-width="1.2"/>
@@ -426,23 +338,14 @@ body{background:radial-gradient(circle at 20% 0%,#2b1055,#0b0416 60%);color:#fff
           </circle>
         </g>
 
-        <!-- DESK -->
         <g id="s-desk">
-          <!-- desk top -->
           <rect x="66" y="294" width="268" height="9" rx="2" fill="url(#deskGrad)"/>
           <rect x="66" y="294" width="268" height="2" rx="1" fill="#a08060" opacity="0.6"/>
-          <!-- desk front -->
           <rect x="66" y="303" width="268" height="18" fill="#3a2010"/>
-          <rect x="66" y="303" width="268" height="2" fill="#000" opacity="0.3"/>
-          <!-- legs -->
           <rect x="74" y="321" width="9" height="14" fill="#2a1508"/>
           <rect x="317" y="321" width="9" height="14" fill="#2a1508"/>
-          <!-- drawer hint -->
-          <rect x="86" y="307" width="46" height="10" rx="1" fill="#2a1508" opacity="0.6"/>
-          <rect x="270" y="307" width="46" height="10" rx="1" fill="#2a1508" opacity="0.6"/>
         </g>
 
-        <!-- KEYBOARD -->
         <g id="s-kb">
           <rect x="172" y="282" width="54" height="11" rx="2" fill="#1a1a2e" stroke="#0a0a1a" stroke-width="1"/>
           <g fill="#2a2a3e">
@@ -450,35 +353,24 @@ body{background:radial-gradient(circle at 20% 0%,#2b1055,#0b0416 60%);color:#fff
             <rect x="187" y="284" width="4" height="4"/><rect x="193" y="284" width="4" height="4"/>
             <rect x="199" y="284" width="4" height="4"/><rect x="205" y="284" width="4" height="4"/>
             <rect x="211" y="284" width="4" height="4"/><rect x="217" y="284" width="4" height="4"/>
-            <rect x="177" y="289" width="4" height="3"/><rect x="183" y="289" width="4" height="3"/>
-            <rect x="189" y="289" width="4" height="3"/><rect x="195" y="289" width="4" height="3"/>
-            <rect x="201" y="289" width="4" height="3"/><rect x="207" y="289" width="4" height="3"/>
-            <rect x="213" y="289" width="4" height="3"/>
           </g>
           <rect x="174" y="286" width="50" height="1.5" fill="#00d4ff" opacity="0.4" id="s-kb-led" style="display:none"/>
         </g>
 
-        <!-- MOUSE -->
         <ellipse cx="240" cy="286" rx="7" ry="5" fill="#1a1a2e" stroke="#0a0a1a" stroke-width="0.8"/>
         <ellipse cx="240" cy="284" rx="7" ry="1.5" fill="#00d4ff" opacity="0.3" id="s-mouse-led" style="display:none"/>
 
-        <!-- COFFEE CUP -->
         <g id="s-coffee">
           <ellipse cx="82" cy="300" rx="9" ry="2" fill="#000" opacity="0.4"/>
           <path d="M 75 290 L 89 290 L 88 300 Q 82 303 76 300 Z" fill="#fff"/>
           <ellipse cx="82" cy="290" rx="7" ry="2" fill="#3a1a08"/>
           <ellipse cx="82" cy="290" rx="6" ry="1.5" fill="#5a2a10"/>
           <path d="M 89 292 Q 94 292 94 296 Q 94 299 89 299" fill="none" stroke="#fff" stroke-width="2"/>
-          <!-- steam -->
           <path d="M 79 286 Q 77 280 79 274" fill="none" stroke="#fff" stroke-width="1" opacity="0.4">
             <animate attributeName="opacity" values="0.5;0.1;0.5" dur="3s" repeatCount="indefinite"/>
           </path>
-          <path d="M 84 286 Q 86 280 84 274" fill="none" stroke="#fff" stroke-width="1" opacity="0.4">
-            <animate attributeName="opacity" values="0.3;0.6;0.3" dur="2.5s" repeatCount="indefinite"/>
-          </path>
         </g>
 
-        <!-- LAMP (light 1-3) -->
         <g id="s-lamp" style="display:none">
           <rect x="348" y="266" width="7" height="28" fill="#3a3a4a"/>
           <ellipse cx="351" cy="296" rx="18" ry="4" fill="#2a2a3a"/>
@@ -487,23 +379,18 @@ body{background:radial-gradient(circle at 20% 0%,#2b1055,#0b0416 60%);color:#fff
           <ellipse cx="351" cy="254" rx="26" ry="16" fill="url(#lampGlow)" opacity="0.55"/>
         </g>
 
-        <!-- CAMERA (camera 1+) -->
         <g id="s-camera" style="display:none">
           <ellipse cx="115" cy="300" rx="14" ry="3" fill="#000" opacity="0.4"/>
           <rect x="100" y="252" width="30" height="24" rx="4" fill="#0a0a1a" stroke="#3a3a4e" stroke-width="1.5"/>
           <circle cx="115" cy="264" r="8" fill="#000" stroke="#7d5cff" stroke-width="2"/>
           <circle cx="115" cy="264" r="3.5" fill="#7d5cff" opacity="0.6"/>
-          <!-- rec light -->
           <circle cx="104" cy="256" r="1.5" fill="#ff0000">
             <animate attributeName="opacity" values="1;0.2;1" dur="1.5s" repeatCount="indefinite"/>
           </circle>
-          <!-- lens -->
           <circle cx="115" cy="264" r="1.8" fill="#fff" opacity="0.6"/>
-          <!-- stand -->
           <rect x="110" y="276" width="10" height="18" fill="#2a2a3a"/>
           <ellipse cx="115" cy="296" rx="16" ry="4" fill="#2a2a3a"/>
         </g>
-        <!-- PRO CAMERA (camera 4+) -->
         <g id="s-camera2" style="display:none">
           <ellipse cx="115" cy="300" rx="18" ry="4" fill="#000" opacity="0.4"/>
           <rect x="95" y="244" width="46" height="32" rx="5" fill="#0a0a1a" stroke="#ffd76e" stroke-width="1.8"/>
@@ -511,21 +398,15 @@ body{background:radial-gradient(circle at 20% 0%,#2b1055,#0b0416 60%);color:#fff
           <circle cx="118" cy="260" r="7" fill="#000"/>
           <circle cx="118" cy="260" r="4" fill="#00d4ff" opacity="0.6"/>
           <circle cx="118" cy="260" r="2" fill="#fff" opacity="0.7"/>
-          <!-- rec light -->
           <circle cx="102" cy="250" r="2" fill="#ff0000">
             <animate attributeName="opacity" values="1;0.2;1" dur="1.2s" repeatCount="indefinite"/>
           </circle>
-          <!-- top handle -->
           <rect x="105" y="238" width="26" height="6" rx="2" fill="#1a1a30" stroke="#3a3a4e" stroke-width="0.8"/>
-          <!-- mic hint -->
-          <circle cx="135" cy="256" r="2" fill="#ff4ec4"/>
-          <!-- stand -->
           <rect x="110" y="276" width="16" height="18" fill="#2a2a3a"/>
           <rect x="105" y="292" width="26" height="4" fill="#2a2a3a"/>
           <ellipse cx="118" cy="298" rx="18" ry="4" fill="#2a2a3a"/>
         </g>
 
-        <!-- MIC (mic 1+) -->
         <g id="s-mic" style="display:none">
           <ellipse cx="290" cy="300" rx="10" ry="3" fill="#000" opacity="0.4"/>
           <rect x="284" y="272" width="12" height="22" rx="4" fill="#2a2a3a" stroke="#3a3a4e" stroke-width="0.8"/>
@@ -533,45 +414,32 @@ body{background:radial-gradient(circle at 20% 0%,#2b1055,#0b0416 60%);color:#fff
           <rect x="280" y="292" width="20" height="4" rx="1" fill="#2a2a3a"/>
           <circle cx="290" cy="273" r="2" fill="#ff4ec4"/>
         </g>
-        <!-- MIC ON BOOM ARM (mic 4+) -->
         <g id="s-mic2" style="display:none">
-          <!-- arm -->
           <path d="M 372 280 Q 340 236 296 244" fill="none" stroke="#2a2a3a" stroke-width="4.5" stroke-linecap="round"/>
           <circle cx="372" cy="282" r="6" fill="#1a1a2e"/>
-          <!-- mic body -->
           <rect x="288" y="234" width="14" height="28" rx="4" fill="#1a1a2e" stroke="#3a3a4e" stroke-width="1"/>
-          <!-- grille -->
           <rect x="290" y="236" width="10" height="12" rx="3" fill="#3a3a4e"/>
-          <!-- led -->
           <circle cx="295" cy="240" r="1.5" fill="#00d4ff">
             <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
           </circle>
-          <!-- pop filter -->
           <ellipse cx="295" cy="262" rx="10" ry="5" fill="#2a2a3e" opacity="0.9"/>
-          <ellipse cx="295" cy="262" rx="10" ry="5" fill="none" stroke="#3a3a4e" stroke-width="0.8"/>
         </g>
 
-        <!-- RING LIGHT (light 4+) -->
         <g id="s-ring" style="display:none">
           <circle cx="200" cy="100" r="60" fill="url(#ringGlow)" opacity="0.5"/>
           <circle cx="200" cy="100" r="34" fill="none" stroke="#fff" stroke-width="5" opacity="0.95"/>
           <circle cx="200" cy="100" r="34" fill="none" stroke="#e0f4ff" stroke-width="10" opacity="0.4"/>
-          <circle cx="200" cy="100" r="42" fill="none" stroke="#fff" stroke-width="1" opacity="0.3"/>
         </g>
 
-        <!-- SOFTBOX (light 7+) -->
         <g id="s-softbox" style="display:none">
-          <!-- left -->
           <rect x="8" y="118" width="48" height="48" rx="5" fill="#fff" opacity="0.92"/>
           <rect x="10" y="120" width="44" height="44" rx="4" fill="#f0f8ff" opacity="0.8"/>
           <rect x="28" y="166" width="8" height="66" fill="#3a3a4e"/>
-          <!-- right -->
           <rect x="344" y="118" width="48" height="48" rx="5" fill="#fff" opacity="0.92"/>
           <rect x="346" y="120" width="44" height="44" rx="4" fill="#f0f8ff" opacity="0.8"/>
           <rect x="364" y="166" width="8" height="66" fill="#3a3a4e"/>
         </g>
 
-        <!-- CAR in room (badge on wall) -->
         <g id="s-carroom" style="display:none"></g>
       </svg>
     </div>
@@ -773,7 +641,6 @@ function updateScene(){
 
   document.getElementById('s-window').style.display = tier >= 2 ? 'block' : 'none';
   document.getElementById('s-led').style.display = tier >= 3 ? 'block' : 'none';
-  document.getElementById('s-floor-reflect').style.display = tier >= 3 ? 'block' : 'none';
   document.getElementById('s-posters').style.display = tier >= 1 ? 'block' : 'none';
   document.getElementById('s-shelf').style.display = tier >= 3 ? 'block' : 'none';
   document.getElementById('s-wallglow').style.display = tier >= 4 ? 'block' : 'none';
@@ -825,7 +692,6 @@ function updateScene(){
       <circle cx="35" cy="192" r="2" fill="#000"/>
       <circle cx="49" cy="192" r="2" fill="#000"/>
       <rect x="35" y="177" width="12" height="6" rx="2" fill="${c}" opacity="0.85"/>
-      <circle cx="44" cy="193" r="1.5" fill="#fff" opacity="0.7"/>
     `;
   } else carwin.style.display = 'none';
 
@@ -970,8 +836,12 @@ function showPopup(icon,title,html){
   document.getElementById('popContent').innerHTML =
     `<div style="font-size:44px;margin-bottom:6px">${icon}</div>
      <h2>${title}</h2><p>${html}</p>
-     <button class="btn" onclick="closePopup()">OK</button>`;
+     <button class="btn" id="popOkBtn">OK</button>`;
   document.getElementById('popup').classList.add('show');
+  setTimeout(()=>{
+    const b = document.getElementById('popOkBtn');
+    if(b) bindTap(b, closePopup);
+  }, 10);
 }
 function closePopup(){ document.getElementById('popup').classList.remove('show'); }
 
@@ -1020,6 +890,18 @@ function render(){
   if(curTab === 'stat') renderStat();
 }
 
+function bindListClicks(container){
+  container.querySelectorAll('[data-act]').forEach(el=>{
+    bindTap(el, ()=>{
+      const act = el.dataset.act;
+      if(act === 'upg') buyUpg(el.dataset.id);
+      else if(act === 'car') buyCar(el.dataset.id);
+      else if(act === 'skill') buySkill(el.dataset.id);
+      else if(act === 'shop') buyShop(el.dataset.id);
+    });
+  });
+}
+
 function renderUpg(){
   const el = document.getElementById('upgList');
   el.innerHTML = '';
@@ -1029,13 +911,14 @@ function renderUpg(){
     const can = S.money >= c;
     const d = document.createElement('div');
     d.className = 'up ' + (can?'can':'lock');
+    d.dataset.act = 'upg'; d.dataset.id = u.id;
     d.innerHTML = `<div class="ico">${u.ico}</div>
       <div class="info"><div class="name">${u.name}<span class="lvl">ур.${lvl}</span></div>
       <div class="desc">${u.desc}</div></div>
       <div class="cost">${fmt(c)} ₽</div>`;
-    d.onclick = ()=>buyUpg(u.id);
     el.appendChild(d);
   }
+  bindListClicks(el);
 }
 function renderCar(){
   const el = document.getElementById('carList');
@@ -1046,13 +929,14 @@ function renderCar(){
     const can = !owned && S.money >= car.cost;
     const d = document.createElement('div');
     d.className = 'up ' + (owned?'owned':(can?'can':'lock'));
+    if(!owned){ d.dataset.act = 'car'; d.dataset.id = car.id; }
     d.innerHTML = `<div class="ico">${car.ico}</div>
       <div class="info"><div class="name">${car.name}${owned?' <span class="badge">в гараже</span>':''}</div>
       <div class="desc">${car.desc}</div></div>
       <div class="cost">${owned?'✅':fmt(car.cost)+' ₽'}</div>`;
-    d.onclick = ()=>buyCar(car.id);
     el.appendChild(d);
   }
+  bindListClicks(el);
 }
 function renderSkill(){
   const el = document.getElementById('skillList');
@@ -1064,13 +948,14 @@ function renderSkill(){
     const can = !maxed && S.fame >= cost;
     const d = document.createElement('div');
     d.className = 'up ' + (maxed?'owned':(can?'can':'lock'));
+    if(!maxed){ d.dataset.act = 'skill'; d.dataset.id = sk.id; }
     d.innerHTML = `<div class="ico">${sk.ico}</div>
       <div class="info"><div class="name">${sk.name}<span class="lvl">ур.${lvl}/${sk.max}</span></div>
       <div class="desc">${sk.desc}</div></div>
       <div class="cost">${maxed?'✅':fmt(cost)+' ⭐'}</div>`;
-    d.onclick = ()=>{ if(!maxed) buySkill(sk.id); };
     el.appendChild(d);
   }
+  bindListClicks(el);
 }
 function renderShop(){
   const el = document.getElementById('shopList');
@@ -1080,13 +965,14 @@ function renderShop(){
     const can = !owned && S.money >= it.cost;
     const d = document.createElement('div');
     d.className = 'up ' + (owned?'owned':(can?'can':'lock'));
+    if(!owned){ d.dataset.act = 'shop'; d.dataset.id = it.id; }
     d.innerHTML = `<div class="ico">${it.ico}</div>
       <div class="info"><div class="name">${it.name}${owned?' <span class="badge">куплено</span>':''}</div>
       <div class="desc">${it.desc}</div></div>
       <div class="cost">${owned?'✅':fmt(it.cost)+' ₽'}</div>`;
-    d.onclick = ()=>buyShop(it.id);
     el.appendChild(d);
   }
+  bindListClicks(el);
 }
 function renderAch(){
   const el = document.getElementById('achList');
@@ -1164,23 +1050,40 @@ function load(){
   }catch(e){ return JSON.parse(JSON.stringify(DEFAULT)); }
 }
 
-const _sw = document.getElementById('sceneWrap');
-let _lastTouch = 0;
-function _handleTap(e){
-  e.preventDefault();
-  const now = Date.now();
-  if(now - _lastTouch < 200) return;
-  _lastTouch = now;
-  doPost();
+// УНИВЕРСАЛЬНЫЙ ОБРАБОТЧИК ТАПОВ ДЛЯ iOS
+function bindTap(el, fn){
+  let lastT = 0;
+  let touched = false;
+  const handler = (e)=>{
+    if(e) e.preventDefault();
+    const now = Date.now();
+    if(now - lastT < 180) return;
+    lastT = now;
+    fn();
+  };
+  el.addEventListener('touchstart', (e)=>{ touched = true; handler(e); }, {passive:false});
+  el.addEventListener('mousedown', (e)=>{ if(touched) return; handler(e); });
 }
-_sw.addEventListener('touchstart', _handleTap, {passive:false});
-_sw.addEventListener('mousedown', _handleTap);
 
-document.getElementById('boost').onclick = buyBoost;
+// СЦЕНА
+bindTap(document.getElementById('sceneWrap'), doPost);
+
+// КНОПКА РЕКЛАМЫ
+bindTap(document.getElementById('boost'), buyBoost);
+
+// ВКЛАДКИ ВНИЗУ
 document.querySelectorAll('#tabs .tab').forEach(t=>{
-  t.onclick = ()=>switchTab(t.dataset.t);
+  bindTap(t, ()=>switchTab(t.dataset.t));
 });
-document.getElementById('popup').onclick = (e)=>{ if(e.target.id==='popup') closePopup(); };
+
+// ЗАКРЫТИЕ ПОПАПА
+const popupEl = document.getElementById('popup');
+popupEl.addEventListener('touchstart', (e)=>{ 
+  if(e.target.id==='popup'){ e.preventDefault(); closePopup(); }
+}, {passive:false});
+popupEl.addEventListener('click', (e)=>{ 
+  if(e.target.id==='popup') closePopup(); 
+});
 
 setInterval(save, 5000);
 window.addEventListener('beforeunload', save);
