@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Блогер 2.0</title>
+<title>Блогер 3.0</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
 body{font-family:-apple-system,"Segoe UI",Roboto,sans-serif;background:radial-gradient(circle at 20% 0%,#2b1055,#0b0416 60%);color:#fff;min-height:100vh;overflow-x:hidden}
 #app{max-width:560px;margin:0 auto;padding:8px 10px 84px;position:relative}
 .hud{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px}
@@ -22,11 +22,10 @@ body{font-family:-apple-system,"Segoe UI",Roboto,sans-serif;background:radial-gr
 .view.active{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-/* ==== СЦЕНА ==== */
-.scene-wrap{position:relative;width:100%;aspect-ratio:400/280;border-radius:18px;overflow:hidden;box-shadow:0 8px 30px rgba(125,92,255,.35),inset 0 0 0 1px rgba(255,255,255,.08);cursor:pointer;margin-bottom:10px;transition:transform .08s;background:#0b0416}
+.scene-wrap{position:relative;width:100%;aspect-ratio:400/340;border-radius:18px;overflow:hidden;box-shadow:0 8px 30px rgba(125,92,255,.35),inset 0 0 0 1px rgba(255,255,255,.08);margin-bottom:10px;background:#0b0416;touch-action:manipulation;cursor:pointer;transition:transform .08s}
 .scene-wrap:active{transform:scale(.985)}
-#scene{width:100%;height:100%;display:block}
-.float{position:absolute;pointer-events:none;font-weight:800;font-size:18px;color:#ff7dd6;animation:floatUp 1.1s ease-out forwards;text-shadow:0 0 10px rgba(255,125,214,.85),0 2px 4px rgba(0,0,0,.6);z-index:5;transform:translateX(-50%)}
+#scene{width:100%;height:100%;display:block;pointer-events:none}
+.float{position:absolute;pointer-events:none;font-weight:800;font-size:18px;color:#ff7dd6;animation:floatUp 1.1s ease-out forwards;text-shadow:0 0 10px rgba(255,125,214,.85),0 2px 4px rgba(0,0,0,.6);z-index:5}
 @keyframes floatUp{0%{opacity:1;transform:translate(-50%,0) scale(1)}100%{opacity:0;transform:translate(-50%,-100px) scale(1.35)}}
 .hint{font-size:12px;opacity:.6;margin-bottom:10px;text-align:center}
 .combo{font-size:20px;font-weight:800;color:#ffd76e;text-shadow:0 0 14px rgba(255,215,110,.9);height:24px;margin:0 0 6px;text-align:center}
@@ -41,13 +40,13 @@ body{font-family:-apple-system,"Segoe UI",Roboto,sans-serif;background:radial-gr
 .up:active{transform:scale(.98)}
 .up.can{border-color:rgba(125,255,155,.55);background:rgba(125,255,155,.08)}
 .up.lock{opacity:.42}
+.up.owned{border-color:rgba(255,215,110,.5);background:rgba(255,215,110,.08);opacity:.85;cursor:default}
 .up .ico{font-size:24px;width:34px;text-align:center}
 .up .info{flex:1;min-width:0}
 .up .name{font-weight:700;font-size:13px}
 .up .name .lvl{color:#7dff9b;font-size:11px;margin-left:4px}
 .up .desc{font-size:10.5px;opacity:.62;margin-top:1px;line-height:1.3}
 .up .cost{font-size:12px;font-weight:700;color:#ffd76e;white-space:nowrap}
-.up.owned{border-color:rgba(255,215,110,.5);background:rgba(255,215,110,.08);opacity:.85;cursor:default}
 .plat{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:10px;cursor:pointer;margin-bottom:7px}
 .plat.sel{border-color:rgba(125,92,255,.8);background:rgba(125,92,255,.15);box-shadow:0 0 15px rgba(125,92,255,.3)}
 .plat.locked{opacity:.4}
@@ -62,11 +61,11 @@ body{font-family:-apple-system,"Segoe UI",Roboto,sans-serif;background:radial-gr
 .ach .d{font-size:10.5px;opacity:.7}
 #log{font-size:11.5px;line-height:1.55;max-height:150px;overflow:hidden;margin-top:6px}
 #log div{animation:fade .3s;padding:2px 0}
-#tabs{position:fixed;bottom:0;left:0;right:0;background:rgba(11,4,22,.96);border-top:1px solid rgba(255,255,255,.09);display:flex;justify-content:space-around;padding:6px 2px 10px;backdrop-filter:blur(12px);z-index:50;max-width:560px;margin:0 auto}
-#tabs .tab{flex:1;text-align:center;padding:4px 2px;cursor:pointer;opacity:.5;transition:.15s}
+#tabs{position:fixed;bottom:0;left:0;right:0;background:rgba(11,4,22,.96);border-top:1px solid rgba(255,255,255,.09);display:flex;justify-content:space-around;padding:6px 0 10px;backdrop-filter:blur(12px);z-index:50;max-width:560px;margin:0 auto;overflow-x:auto}
+#tabs .tab{flex:1;min-width:44px;text-align:center;padding:4px 2px;cursor:pointer;opacity:.5;transition:.15s}
 #tabs .tab.on{opacity:1;transform:translateY(-2px)}
-#tabs .tab .i{font-size:19px;display:block}
-#tabs .tab .l{font-size:9px;margin-top:1px;font-weight:600}
+#tabs .tab .i{font-size:18px;display:block}
+#tabs .tab .l{font-size:8.5px;margin-top:1px;font-weight:600}
 #popup{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:100;padding:20px;backdrop-filter:blur(6px)}
 #popup.show{display:flex}
 .pop{background:linear-gradient(160deg,#2b1055,#160a2b);border:1px solid rgba(255,255,255,.15);border-radius:18px;padding:22px;max-width:340px;width:100%;text-align:center;animation:popIn .3s}
@@ -90,949 +89,221 @@ body{font-family:-apple-system,"Segoe UI",Roboto,sans-serif;background:radial-gr
   <div class="ebar"><div class="efill" id="ef"></div></div>
   <div class="elbl" id="el">20/20 ⚡</div>
 
-  <!-- ГЛАВНАЯ -->
   <div class="view active" id="v-home">
     <div class="scene-wrap" id="sceneWrap">
-      <svg id="scene" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid meet">
+      <svg id="scene" viewBox="0 0 400 340" preserveAspectRatio="xMidYMid meet">
         <defs>
           <linearGradient id="wallGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop id="wallTop" offset="0" stop-color="#3a2f4a"/>
-            <stop id="wallBot" offset="1" stop-color="#1a0f2a"/>
+            <stop id="wallTop" offset="0" stop-color="#4a3a6a"/>
+            <stop id="wallBot" offset="1" stop-color="#2a1a3a"/>
           </linearGradient>
           <linearGradient id="floorGrad" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0" stop-color="#2a1830"/>
             <stop offset="1" stop-color="#150a1c"/>
           </linearGradient>
-          <radialGradient id="monGlow" cx="0.5" cy="0.5">
-            <stop offset="0" stop-color="#7d5cff" stop-opacity="0.55"/>
-            <stop offset="1" stop-color="#7d5cff" stop-opacity="0"/>
-          </radialGradient>
-          <radialGradient id="ringGlow" cx="0.5" cy="0.5">
-            <stop offset="0" stop-color="#ffffff" stop-opacity="0.9"/>
-            <stop offset="0.55" stop-color="#ffffff" stop-opacity="0.35"/>
-            <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
-          </radialGradient>
-          <radialGradient id="lampGlow" cx="0.5" cy="0.2">
-            <stop offset="0" stop-color="#ffe9a8" stop-opacity="0.9"/>
-            <stop offset="1" stop-color="#ffe9a8" stop-opacity="0"/>
-          </radialGradient>
+          <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1a1a4a"/>
+            <stop offset="1" stop-color="#4a2a6a"/>
+          </linearGradient>
           <linearGradient id="ledGrad" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0" stop-color="#ff4ec4"/>
             <stop offset="0.5" stop-color="#7d5cff"/>
             <stop offset="1" stop-color="#00d4ff"/>
           </linearGradient>
-          <linearGradient id="screen1" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#7d5cff"/>
-            <stop offset="1" stop-color="#ff4ec4"/>
+          <linearGradient id="carpetGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop id="carpet1" offset="0" stop-color="#5a2a4a"/>
+            <stop id="carpet2" offset="1" stop-color="#3a1a3a"/>
           </linearGradient>
-          <linearGradient id="screen2" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#00d4ff"/>
-            <stop offset="1" stop-color="#7d5cff"/>
-          </linearGradient>
+          <radialGradient id="monGlow" cx="0.5" cy="0.5">
+            <stop offset="0" stop-color="#7d5cff" stop-opacity="0.6"/>
+            <stop offset="1" stop-color="#7d5cff" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="lampGlow" cx="0.5" cy="0.2">
+            <stop offset="0" stop-color="#ffe9a8" stop-opacity="0.9"/>
+            <stop offset="1" stop-color="#ffe9a8" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="ringGlow" cx="0.5" cy="0.5">
+            <stop offset="0" stop-color="#fff" stop-opacity="0.6"/>
+            <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+          </radialGradient>
         </defs>
 
-        <!-- ЗАДНЯЯ СТЕНА -->
-        <rect id="wall" x="0" y="0" width="400" height="195" fill="url(#wallGrad)"/>
+        <!-- CEILING -->
+        <rect x="0" y="0" width="400" height="20" fill="#0a0410"/>
+        <rect x="0" y="18" width="400" height="3" fill="#1a0f2a"/>
+        <g id="s-led" style="display:none">
+          <rect x="0" y="20" width="400" height="4" fill="url(#ledGrad)"/>
+          <rect x="0" y="24" width="400" height="14" fill="url(#ledGrad)" opacity="0.35"/>
+        </g>
 
-        <!-- ОКНО (открывается на tier 2) -->
+        <!-- WALL -->
+        <rect x="0" y="22" width="400" height="220" fill="url(#wallGrad)"/>
+        <!-- wallpaper pattern (subtle dots) -->
+        <g opacity="0.06">
+          <circle cx="20" cy="60" r="1.5" fill="#fff"/>
+          <circle cx="60" cy="90" r="1.5" fill="#fff"/>
+          <circle cx="100" cy="60" r="1.5" fill="#fff"/>
+          <circle cx="140" cy="90" r="1.5" fill="#fff"/>
+          <circle cx="180" cy="60" r="1.5" fill="#fff"/>
+          <circle cx="260" cy="60" r="1.5" fill="#fff"/>
+          <circle cx="300" cy="90" r="1.5" fill="#fff"/>
+          <circle cx="340" cy="60" r="1.5" fill="#fff"/>
+          <circle cx="380" cy="90" r="1.5" fill="#fff"/>
+          <circle cx="40" cy="120" r="1.5" fill="#fff"/>
+          <circle cx="120" cy="120" r="1.5" fill="#fff"/>
+          <circle cx="200" cy="120" r="1.5" fill="#fff"/>
+          <circle cx="280" cy="120" r="1.5" fill="#fff"/>
+          <circle cx="360" cy="120" r="1.5" fill="#fff"/>
+        </g>
+
+        <!-- WINDOW (tier 2+) -->
         <g id="s-window" style="display:none">
-          <rect x="22" y="35" width="86" height="105" rx="5" fill="#0a0a1e" stroke="#4a3a6a" stroke-width="3"/>
-          <line x1="65" y1="35" x2="65" y2="140" stroke="#4a3a6a" stroke-width="2"/>
-          <line x1="22" y1="88" x2="108" y2="88" stroke="#4a3a6a" stroke-width="2"/>
+          <rect x="18" y="45" width="124" height="145" rx="6" fill="#0a0a1e" stroke="#7a6a9a" stroke-width="5"/>
+          <rect x="24" y="51" width="112" height="133" fill="url(#skyGrad)"/>
+          <!-- stars -->
+          <g fill="#fff" opacity="0.8">
+            <circle cx="40" cy="65" r="0.9"/>
+            <circle cx="95" cy="60" r="0.9"/>
+            <circle cx="55" cy="80" r="0.7"/>
+            <circle cx="120" cy="75" r="0.7"/>
+          </g>
+          <!-- moon -->
+          <circle cx="118" cy="75" r="9" fill="#ffe9a8" opacity="0.95"/>
+          <circle cx="115" cy="72" r="9" fill="#202050"/>
+          <!-- skyline -->
           <g fill="#151530">
-            <rect x="26" y="105" width="8" height="32"/>
-            <rect x="36" y="95" width="10" height="42"/>
-            <rect x="48" y="110" width="7" height="27"/>
-            <rect x="70" y="98" width="9" height="39"/>
-            <rect x="82" y="112" width="8" height="25"/>
-            <rect x="93" y="102" width="11" height="35"/>
+            <rect x="26" y="135" width="10" height="49"/>
+            <rect x="38" y="118" width="13" height="66"/>
+            <rect x="54" y="145" width="8" height="39"/>
+            <rect x="64" y="128" width="11" height="56"/>
+            <rect x="78" y="140" width="9" height="44"/>
+            <rect x="90" y="122" width="13" height="62"/>
+            <rect x="106" y="142" width="10" height="42"/>
+            <rect x="119" y="132" width="14" height="52"/>
           </g>
           <g fill="#ffd76e" opacity="0.9">
-            <circle cx="30" cy="112" r="0.9"/><circle cx="40" cy="102" r="0.9"/>
-            <circle cx="52" cy="116" r="0.9"/><circle cx="74" cy="106" r="0.9"/>
-            <circle cx="86" cy="118" r="0.9"/><circle cx="97" cy="110" r="0.9"/>
+            <circle cx="30" cy="145" r="0.8"/><circle cx="33" cy="153" r="0.8"/>
+            <circle cx="43" cy="128" r="0.8"/><circle cx="48" cy="138" r="0.8"/>
+            <circle cx="68" cy="138" r="0.8"/><circle cx="72" cy="150" r="0.8"/>
+            <circle cx="94" cy="132" r="0.8"/><circle cx="98" cy="145" r="0.8"/>
+            <circle cx="123" cy="142" r="0.8"/><circle cx="128" cy="152" r="0.8"/>
           </g>
-          <circle cx="96" cy="55" r="6" fill="#ffe9a8" opacity="0.85"/>
-          <circle cx="93" cy="53" r="6" fill="#0a0a1e"/>
+          <!-- street below (through window) -->
+          <rect x="24" y="170" width="112" height="14" fill="#0a0a20"/>
+          <!-- car in street (dynamic) -->
+          <g id="s-car-window" style="display:none"></g>
+          <!-- window cross -->
+          <line x1="80" y1="51" x2="80" y2="184" stroke="#7a6a9a" stroke-width="3"/>
+          <line x1="24" y1="118" x2="136" y2="118" stroke="#7a6a9a" stroke-width="3"/>
+          <!-- sill -->
+          <rect x="12" y="186" width="136" height="8" rx="2" fill="#7a6a9a"/>
+          <!-- flower pot on sill -->
+          <g id="s-window-plant" style="display:none">
+            <rect x="40" y="178" width="16" height="12" rx="2" fill="#8a5a3a"/>
+            <ellipse cx="48" cy="174" rx="10" ry="6" fill="#2a8a3a"/>
+            <ellipse cx="43" cy="170" rx="5" ry="4" fill="#3a9a4a"/>
+            <ellipse cx="53" cy="171" rx="5" ry="4" fill="#3a9a4a"/>
+            <circle cx="48" cy="168" r="3" fill="#ff4ec4"/>
+          </g>
         </g>
 
-        <!-- LED ПОДСВЕТКА (tier 3) -->
-        <g id="s-led" style="display:none">
-          <rect x="0" y="6" width="400" height="3" fill="url(#ledGrad)"/>
-          <rect x="0" y="9" width="400" height="10" fill="url(#ledGrad)" opacity="0.35"/>
-        </g>
-
-        <!-- ПОСТЕРЫ (tier 1) -->
+        <!-- POSTERS -->
         <g id="s-posters" style="display:none">
-          <rect x="308" y="35" width="42" height="58" rx="3" fill="#4a2a6a" stroke="#7d5cff" stroke-width="1.5"/>
-          <text x="329" y="62" text-anchor="middle" font-size="10" fill="#ffd76e" font-weight="bold" font-family="sans-serif">GOAL</text>
-          <text x="329" y="76" text-anchor="middle" font-size="7" fill="#fff" opacity="0.7" font-family="sans-serif">1M SUBS</text>
-          <rect x="358" y="38" width="36" height="46" rx="3" fill="#2a3a5a" stroke="#00d4ff" stroke-width="1.5"/>
-          <circle cx="376" cy="58" r="9" fill="#00d4ff" opacity="0.4"/>
+          <rect x="285" y="45" width="46" height="62" rx="3" fill="#4a2a6a" stroke="#7d5cff" stroke-width="2"/>
+          <text x="308" y="72" text-anchor="middle" font-size="11" fill="#ffd76e" font-weight="bold" font-family="sans-serif">GOAL</text>
+          <text x="308" y="88" text-anchor="middle" font-size="8" fill="#fff" opacity="0.75" font-family="sans-serif">1M SUBS</text>
+          <rect x="338" y="48" width="40" height="52" rx="3" fill="#2a3a5a" stroke="#00d4ff" stroke-width="2"/>
+          <circle cx="358" cy="72" r="10" fill="#00d4ff" opacity="0.5"/>
+          <polygon points="356,66 356,78 366,72" fill="#fff"/>
         </g>
 
-        <!-- ПОЛКА С ДЕКОРОМ (tier 4) -->
+        <!-- SHELF (tier 4) -->
         <g id="s-shelf" style="display:none">
-          <rect x="280" y="118" width="110" height="4" rx="1" fill="#5a4a7a"/>
-          <rect x="286" y="102" width="9" height="16" fill="#7d5cff"/>
-          <rect x="298" y="98" width="7" height="20" fill="#ff4ec4"/>
-          <rect x="308" y="108" width="11" height="10" fill="#00d4ff"/>
-          <rect x="322" y="104" width="6" height="14" fill="#ffd76e"/>
-          <!-- растение -->
-          <rect x="368" y="108" width="14" height="10" rx="2" fill="#8a5a3a"/>
-          <ellipse cx="375" cy="106" rx="9" ry="7" fill="#2a7a3a"/>
-          <ellipse cx="370" cy="102" rx="5" ry="4" fill="#3a9a4a"/>
-          <ellipse cx="380" cy="103" rx="4" ry="4" fill="#3a9a4a"/>
+          <rect x="230" y="128" width="162" height="5" rx="1" fill="#6a5a8a"/>
+          <rect x="236" y="108" width="10" height="20" fill="#7d5cff"/>
+          <rect x="248" y="104" width="8" height="24" fill="#ff4ec4"/>
+          <rect x="258" y="116" width="13" height="12" fill="#00d4ff"/>
+          <rect x="274" y="110" width="7" height="18" fill="#ffd76e"/>
+          <!-- figurines -->
+          <rect x="290" y="118" width="8" height="10" rx="2" fill="#ff7dd6"/>
+          <circle cx="294" cy="115" r="4" fill="#ff7dd6"/>
+          <rect x="305" y="115" width="9" height="13" rx="2" fill="#7dff9b"/>
+          <circle cx="309.5" cy="112" r="4.5" fill="#7dff9b"/>
+          <rect x="322" y="120" width="8" height="8" rx="1.5" fill="#00d4ff"/>
+          <circle cx="326" cy="116" r="4" fill="#00d4ff"/>
+          <!-- frame -->
+          <rect x="345" y="100" width="30" height="28" rx="2" fill="#3a2a5a" stroke="#ffd76e" stroke-width="1.5"/>
+          <text x="360" y="120" text-anchor="middle" font-size="9" fill="#ffd76e" font-family="sans-serif">★</text>
         </g>
 
-        <!-- СВЕТ ОТ МОНИТОРА (за персонажем) -->
-        <ellipse id="s-glow" cx="200" cy="135" rx="130" ry="80" fill="url(#monGlow)" opacity="0.8"/>
+        <!-- FLOOR -->
+        <rect x="0" y="242" width="400" height="98" fill="url(#floorGrad)"/>
+        <line x1="0" y1="242" x2="400" y2="242" stroke="#000" stroke-width="1.5" opacity="0.5"/>
 
-        <!-- МОНИТОРЫ (за персонажем) -->
+        <!-- CARPET -->
+        <g id="s-carpet">
+          <ellipse cx="200" cy="308" rx="180" ry="26" fill="url(#carpetGrad)"/>
+          <ellipse cx="200" cy="308" rx="160" ry="20" fill="none" stroke="#ff4ec4" stroke-width="1" opacity="0.4"/>
+          <ellipse cx="200" cy="308" rx="130" ry="14" fill="none" stroke="#7d5cff" stroke-width="1" opacity="0.4"/>
+          <ellipse cx="200" cy="308" rx="80" ry="8" fill="none" stroke="#00d4ff" stroke-width="1" opacity="0.4"/>
+        </g>
+
+        <!-- FLOOR PLANTS (tier 3+) -->
+        <g id="s-plant-left" style="display:none">
+          <rect x="30" y="222" width="24" height="22" rx="3" fill="#8a5a3a"/>
+          <rect x="28" y="220" width="28" height="6" rx="2" fill="#a06a4a"/>
+          <ellipse cx="42" cy="210" rx="18" ry="14" fill="#2a8a3a"/>
+          <ellipse cx="32" cy="205" rx="10" ry="9" fill="#3a9a4a"/>
+          <ellipse cx="52" cy="206" rx="10" ry="9" fill="#3a9a4a"/>
+          <ellipse cx="42" cy="198" rx="12" ry="10" fill="#4aaa5a"/>
+        </g>
+        <g id="s-plant-right" style="display:none">
+          <rect x="344" y="224" width="22" height="20" rx="3" fill="#8a5a3a"/>
+          <path d="M 355 224 Q 355 200 340 190 M 355 224 Q 360 200 370 195 M 355 224 Q 355 205 355 185" fill="none" stroke="#2a8a3a" stroke-width="3" stroke-linecap="round"/>
+          <ellipse cx="355" cy="182" rx="6" ry="5" fill="#3a9a4a"/>
+          <ellipse cx="340" cy="188" rx="5" ry="4" fill="#3a9a4a"/>
+          <ellipse cx="370" cy="193" rx="5" ry="4" fill="#3a9a4a"/>
+        </g>
+
+        <!-- PET (tier 5+) -->
+        <g id="s-pet" style="display:none">
+          <ellipse cx="90" cy="288" rx="16" ry="9" fill="#3a3a3a"/>
+          <circle cx="106" cy="286" r="6" fill="#3a3a3a"/>
+          <circle cx="108" cy="284" r="1.5" fill="#000"/>
+          <circle cx="110" cy="284" r="1.5" fill="#000"/>
+          <polygon points="103,282 105,278 107,282" fill="#3a3a3a"/>
+          <polygon points="106,282 108,278 110,282" fill="#3a3a3a"/>
+          <path d="M 74 288 Q 70 280 74 275" fill="none" stroke="#3a3a3a" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="108" cy="288" r="1.5" fill="#ff7dd6"/>
+        </g>
+
+        <!-- GLOW behind character (from monitor) -->
+        <ellipse id="s-glow" cx="200" cy="180" rx="130" ry="90" fill="url(#monGlow)" opacity="0.7"/>
+
+        <!-- MONITORS -->
         <g id="s-monitors">
-          <!-- центральный / одиночный -->
           <g id="s-mon1">
-            <rect x="178" y="72" width="44" height="68" rx="4" fill="#0a0a1a" stroke="#1a1a2e" stroke-width="2.5"/>
-            <rect x="181" y="75" width="38" height="62" rx="2" fill="#141428"/>
-            <rect x="184" y="78" width="32" height="8" fill="url(#screen1)" opacity="0.7"/>
-            <rect x="184" y="88" width="20" height="3" fill="#7d5cff" opacity="0.5"/>
-            <rect x="184" y="94" width="26" height="3" fill="#00d4ff" opacity="0.5"/>
-            <rect x="184" y="100" width="16" height="3" fill="#ff4ec4" opacity="0.5"/>
-            <rect x="184" y="106" width="28" height="3" fill="#7d5cff" opacity="0.5"/>
-            <rect x="184" y="112" width="22" height="3" fill="#00d4ff" opacity="0.5"/>
-            <rect x="196" y="140" width="8" height="14" fill="#2a2a3a"/>
-            <rect x="184" y="154" width="32" height="4" rx="1" fill="#2a2a3a"/>
+            <rect x="172" y="118" width="56" height="118" rx="5" fill="#0a0a1a" stroke="#1a1a2e" stroke-width="3"/>
+            <rect x="175" y="121" width="50" height="112" rx="3" fill="#141428"/>
+            <rect x="179" y="125" width="42" height="10" fill="url(#ledGrad)" opacity="0.75"/>
+            <rect x="179" y="139" width="26" height="4" fill="#7d5cff" opacity="0.6"/>
+            <rect x="179" y="147" width="34" height="4" fill="#00d4ff" opacity="0.6"/>
+            <rect x="179" y="155" width="20" height="4" fill="#ff4ec4" opacity="0.6"/>
+            <rect x="179" y="163" width="38" height="4" fill="#7d5cff" opacity="0.6"/>
+            <rect x="179" y="171" width="28" height="4" fill="#00d4ff" opacity="0.6"/>
+            <rect x="179" y="179" width="42" height="4" fill="#ff4ec4" opacity="0.4"/>
+            <rect x="195" y="236" width="10" height="18" fill="#2a2a3a"/>
+            <rect x="180" y="254" width="40" height="5" rx="1" fill="#2a2a3a"/>
           </g>
-          <!-- левый -->
           <g id="s-mon2" style="display:none">
-            <rect x="118" y="84" width="56" height="52" rx="3" fill="#0a0a1a" stroke="#1a1a2e" stroke-width="2"/>
-            <rect x="121" y="87" width="50" height="46" rx="2" fill="#141428"/>
-            <rect x="124" y="90" width="44" height="6" fill="url(#screen2)" opacity="0.75"/>
-            <rect x="124" y="99" width="30" height="3" fill="#00d4ff" opacity="0.5"/>
-            <rect x="124" y="105" width="38" height="3" fill="#7d5cff" opacity="0.5"/>
-            <rect x="124" y="111" width="24" height="3" fill="#ff4ec4" opacity="0.5"/>
+            <rect x="110" y="142" width="58" height="94" rx="4" fill="#0a0a1a" stroke="#1a1a2e" stroke-width="2.5"/>
+            <rect x="113" y="145" width="52" height="88" rx="2" fill="#141428"/>
+            <rect x="117" y="149" width="44" height="8" fill="url(#ledGrad)" opacity="0.7"/>
+            <rect x="117" y="161" width="30" height="4" fill="#00d4ff" opacity="0.55"/>
+            <rect x="117" y="169" width="40" height="4" fill="#7d5cff" opacity="0.55"/>
+            <rect x="117" y="177" width="24" height="4" fill="#ff4ec4" opacity="0.55"/>
+            <rect x="132" y="236" width="8" height="14" fill="#2a2a3a"/>
+            <rect x="120" y="250" width="32" height="4" rx="1" fill="#2a2a3a"/>
           </g>
-          <!-- правый -->
           <g id="s-mon3" style="display:none">
-            <rect x="226" y="84" width="56" height="52" rx="3" fill="#0a0a1a" stroke="#1a1a2e" stroke-width="2"/>
-            <rect x="229" y="87" width="50" height="46" rx="2" fill="#141428"/>
-            <rect x="232" y="90" width="44" height="6" fill="url(#screen2)" opacity="0.75"/>
-            <rect x="232" y="99" width="38" height="3" fill="#7d5cff" opacity="0.5"/>
-            <rect x="232" y="105" width="26" height="3" fill="#00d4ff" opacity="0.5"/>
-            <rect x="232" y="111" width="32" height="3" fill="#ff4ec4" opacity="0.5"/>
-          </g>
-        </g>
-
-        <!-- ПОЛ -->
-        <rect x="0" y="195" width="400" height="85" fill="url(#floorGrad)"/>
-        <line x1="0" y1="195" x2="400" y2="195" stroke="#000" stroke-width="1" opacity="0.4"/>
-
-        <!-- КРЕСЛО (спинка за персонажем) -->
-        <g id="s-chair">
-          <rect id="s-chair-back" x="168" y="172" width="64" height="78" rx="10" fill="#3a2a5a" stroke="#1a0f2a" stroke-width="2"/>
-          <rect x="172" y="168" width="56" height="14" rx="7" fill="#4a3a7a"/>
-          <!-- подголовник -->
-          <ellipse cx="200" cy="178" rx="22" ry="7" fill="#4a3a7a" opacity="0.9"/>
-        </g>
-
-        <!-- ПЕРСОНАЖ -->
-        <g id="s-char">
-          <animateTransform attributeName="transform" type="translate" values="0 0;0 -2;0 0" dur="3s" repeatCount="indefinite"/>
-          <!-- тело -->
-          <path d="M 162 188 Q 162 176 200 176 Q 238 176 238 188 L 246 258 L 154 258 Z" fill="#4a5a7a"/>
-          <!-- рукав-плечо тень -->
-          <path d="M 162 188 Q 162 176 200 176 Q 238 176 238 188 L 246 258 L 154 258 Z" fill="none" stroke="#2a3a5a" stroke-width="1" opacity="0.6"/>
-          <!-- руки -->
-          <path d="M 168 200 Q 150 225 168 250" fill="none" stroke="#4a5a7a" stroke-width="14" stroke-linecap="round"/>
-          <path d="M 232 200 Q 250 225 232 250" fill="none" stroke="#4a5a7a" stroke-width="14" stroke-linecap="round"/>
-          <!-- кисти -->
-          <circle cx="172" cy="248" r="6" fill="#e8b088"/>
-          <circle cx="228" cy="248" r="6" fill="#e8b088"/>
-          <!-- голова -->
-          <ellipse cx="200" cy="160" rx="22" ry="23" fill="#e8b088"/>
-          <!-- волосы (затылок) -->
-          <path d="M 176 158 Q 176 134 200 132 Q 224 134 224 158 Q 224 172 216 176 Q 200 178 184 176 Q 176 172 176 158 Z" fill="#3a1f1a"/>
-          <!-- хайлайт -->
-          <path d="M 182 148 Q 190 140 200 140" fill="none" stroke="#5a2f2a" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
-          <!-- наушники -->
-          <path d="M 172 152 Q 174 126 200 124 Q 226 126 228 152" fill="none" stroke="#1a1a2e" stroke-width="6" stroke-linecap="round"/>
-          <rect x="166" y="146" width="12" height="22" rx="5" fill="#2a2a3e" stroke="#0a0a1a" stroke-width="1"/>
-          <rect x="222" y="146" width="12" height="22" rx="5" fill="#2a2a3e" stroke="#0a0a1a" stroke-width="1"/>
-          <!-- RGB на наушниках (виден при крутых апгрейдах) -->
-          <circle id="s-hp-rgb" cx="172" cy="157" r="1.8" fill="#ff4ec4" opacity="0.9" style="display:none">
-            <animate attributeName="fill" values="#ff4ec4;#00d4ff;#7d5cff;#ff4ec4" dur="3s" repeatCount="indefinite"/>
-          </circle>
-          <circle id="s-hp-rgb2" cx="228" cy="157" r="1.8" fill="#7d5cff" opacity="0.9" style="display:none">
-            <animate attributeName="fill" values="#7d5cff;#ff4ec4;#00d4ff;#7d5cff" dur="3s" repeatCount="indefinite"/>
-          </circle>
-        </g>
-
-        <!-- СТОЛ -->
-        <g id="s-desk">
-          <rect x="72" y="252" width="256" height="7" rx="2" fill="#6a4a2a"/>
-          <rect x="72" y="259" width="256" height="14" fill="#4a2a1a"/>
-          <rect x="80" y="273" width="7" height="10" fill="#3a1a0a"/>
-          <rect x="313" y="273" width="7" height="10" fill="#3a1a0a"/>
-        </g>
-
-        <!-- КЛАВИАТУРА И МЫШЬ -->
-        <g id="s-kb">
-          <rect x="176" y="242" width="48" height="9" rx="2" fill="#2a2a3a" stroke="#1a1a2a" stroke-width="0.8"/>
-          <rect x="178" y="244" width="44" height="2" fill="#00d4ff" opacity="0.35" id="s-kb-led" style="display:none"/>
-          <ellipse cx="240" cy="246" rx="6" ry="4" fill="#2a2a3a" stroke="#1a1a2a" stroke-width="0.8"/>
-        </g>
-
-        <!-- НАСТОЛЬНАЯ ЛАМПА (light 1-3) -->
-        <g id="s-lamp" style="display:none">
-          <rect x="348" y="230" width="6" height="26" fill="#3a3a4a"/>
-          <rect x="338" y="254" width="26" height="4" rx="1" fill="#2a2a3a"/>
-          <path d="M 351 230 L 340 210 L 362 210 Z" fill="#3a3a4a"/>
-          <circle cx="351" cy="212" r="5" fill="#ffe9a8"/>
-          <ellipse cx="351" cy="220" rx="20" ry="14" fill="url(#lampGlow)" opacity="0.55"/>
-        </g>
-
-        <!-- КАМЕРА (camera ≥ 1) -->
-        <g id="s-camera" style="display:none">
-          <rect x="100" y="218" width="30" height="22" rx="4" fill="#1a1a2e" stroke="#3a3a4e" stroke-width="1.5"/>
-          <circle cx="115" cy="229" r="7" fill="#0a0a1a" stroke="#7d5cff" stroke-width="1.8"/>
-          <circle cx="115" cy="229" r="3" fill="#7d5cff" opacity="0.6"/>
-          <rect x="111" y="240" width="8" height="14" fill="#2a2a3a"/>
-          <rect x="104" y="252" width="22" height="4" rx="1" fill="#2a2a3a"/>
-        </g>
-        <!-- КАМЕРА PRO (camera ≥ 4) -->
-        <g id="s-camera2" style="display:none">
-          <rect x="96" y="212" width="42" height="30" rx="5" fill="#0a0a1a" stroke="#ffd76e" stroke-width="1.5"/>
-          <circle cx="117" cy="227" r="11" fill="#000" stroke="#7d5cff" stroke-width="2"/>
-          <circle cx="117" cy="227" r="5" fill="#00d4ff" opacity="0.7"/>
-          <rect x="108" y="242" width="18" height="4" rx="1" fill="#ff4ec4"/>
-          <rect x="110" y="246" width="14" height="12" fill="#2a2a3a"/>
-          <rect x="100" y="256" width="34" height="4" rx="1" fill="#2a2a3a"/>
-        </g>
-
-        <!-- МИКРОФОН (mic ≥ 1) -->
-        <g id="s-mic" style="display:none">
-          <rect x="286" y="240" width="10" height="18" rx="3" fill="#2a2a3a" stroke="#3a3a4e" stroke-width="0.8"/>
-          <rect x="288" y="242" width="6" height="14" rx="2" fill="#3a3a4e"/>
-          <rect x="284" y="256" width="14" height="3" rx="1" fill="#2a2a3a"/>
-          <circle cx="291" cy="241" r="1.5" fill="#ff4ec4"/>
-        </g>
-        <!-- МИКРОФОН НА ЖУРАВЛЕ (mic ≥ 4) -->
-        <g id="s-mic2" style="display:none">
-          <path d="M 372 240 Q 340 200 296 208" fill="none" stroke="#2a2a3a" stroke-width="4"/>
-          <rect x="288" y="200" width="12" height="24" rx="4" fill="#1a1a2e" stroke="#3a3a4e" stroke-width="1"/>
-          <circle cx="294" cy="204" r="1.5" fill="#00d4ff">
-            <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
-          </circle>
-          <!-- поп-фильтр -->
-          <ellipse cx="294" cy="224" rx="9" ry="4" fill="#2a2a3e" opacity="0.9"/>
-        </g>
-
-        <!-- РИНГ-ЛАЙТ (light ≥ 4) -->
-        <g id="s-ring" style="display:none">
-          <circle cx="200" cy="78" r="52" fill="url(#ringGlow)" opacity="0.45"/>
-          <circle cx="200" cy="78" r="30" fill="none" stroke="#fff" stroke-width="4" opacity="0.95"/>
-          <circle cx="200" cy="78" r="30" fill="none" stroke="#cceeff" stroke-width="8" opacity="0.35"/>
-        </g>
-
-        <!-- СОФТБОКСЫ (light ≥ 7) -->
-        <g id="s-softbox" style="display:none">
-          <rect x="10" y="90" width="46" height="46" rx="5" fill="#fff" opacity="0.9"/>
-          <rect x="12" y="92" width="42" height="42" rx="4" fill="#f0f8ff" opacity="0.8"/>
-          <rect x="344" y="90" width="46" height="46" rx="5" fill="#fff" opacity="0.9"/>
-          <rect x="346" y="92" width="42" height="42" rx="4" fill="#f0f8ff" opacity="0.8"/>
-          <rect x="30" y="136" width="6" height="42" fill="#3a3a4e"/>
-          <rect x="364" y="136" width="6" height="42" fill="#3a3a4e"/>
-        </g>
-
-        <!-- БЛИК ОТ СВЕТА НА СТЕНЕ (для ринг-лайта) -->
-        <ellipse id="s-wallglow" cx="200" cy="120" rx="140" ry="90" fill="#fff" opacity="0" style="display:none"/>
-      </svg>
-    </div>
-    <div class="combo" id="combo"></div>
-    <div class="hint" id="hint">Тапай по сцене — снимай контент</div>
-    <button class="btn" id="boost">📢 Реклама ×3 (30с) — 200 ₽</button>
-    <div class="sec">События</div>
-    <div id="log"></div>
-  </div>
-
-  <div class="view" id="v-upg"><div class="sec">Прокачка студии</div><div id="upgList"></div></div>
-  <div class="view" id="v-plat"><div class="sec">Платформы</div><div id="platList"></div></div>
-  <div class="view" id="v-skill"><div class="sec">Дерево навыков (за ⭐ Славу)</div><div id="skillList"></div></div>
-  <div class="view" id="v-shop"><div class="sec">Магазин</div><div id="shopList"></div></div>
-  <div class="view" id="v-ach"><div class="sec">Достижения</div><div id="achList"></div></div>
-  <div class="view" id="v-stat"><div class="sec">Статистика</div><div id="statList"></div></div>
-  <div class="view" id="v-pres"><div class="sec">Престиж — новая жизнь</div><div id="presList"></div></div>
-
-  <nav id="tabs">
-    <div class="tab on" data-t="home"><span class="i">🏠</span><span class="l">Студия</span></div>
-    <div class="tab" data-t="upg"><span class="i">📈</span><span class="l">Прокачка</span></div>
-    <div class="tab" data-t="plat"><span class="i">📱</span><span class="l">Сети</span></div>
-    <div class="tab" data-t="skill"><span class="i">🧠</span><span class="l">Навыки</span></div>
-    <div class="tab" data-t="shop"><span class="i">🛒</span><span class="l">Магазин</span></div>
-    <div class="tab" data-t="ach"><span class="i">🏆</span><span class="l">Ачивки</span></div>
-    <div class="tab" data-t="stat"><span class="i">📊</span><span class="l">Стата</span></div>
-    <div class="tab" data-t="pres"><span class="i">♻️</span><span class="l">Престиж</span></div>
-  </nav>
-</div>
-
-<div id="popup"><div class="pop" id="popContent"></div></div>
-
-<script>
-/* ================================================================
-   СОСТОЯНИЕ
-================================================================ */
-const DEFAULT = {
-  money:0, subs:0, fame:0, totalFame:0,
-  energy:20, maxEnergy:20,
-  prestige:0,
-  platform:'youtube',
-  unlockedPlatforms:['youtube'],
-  upgrades:{},
-  skills:{},
-  oneTime:{},
-  achievements:{},
-  posts:0, streams:0, viral:0, scandals:0,
-  boostUntil:0, combo:0, comboUntil:0, scandalUntil:0, viralBuffUntil:0,
-  playtime:0, startTime:Date.now(), lastSave:Date.now(),
-  nextEventIn:45, day:1
-};
-let S = load();
-
-/* ================================================================
-   ЗВУК
-================================================================ */
-let actx = null;
-function beep(freq=440, dur=0.06, type='sine', vol=0.05){
-  try{
-    if(!actx) actx = new (window.AudioContext||window.webkitAudioContext)();
-    const o = actx.createOscillator(), g = actx.createGain();
-    o.type=type; o.frequency.value=freq;
-    g.gain.value=vol; o.connect(g); g.connect(actx.destination);
-    o.start(); g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime+dur);
-    o.stop(actx.currentTime+dur);
-  }catch(e){}
-}
-
-/* ================================================================
-   ДАННЫЕ
-================================================================ */
-const UPGRADES = [
-  {id:'camera', name:'Камера', ico:'📷', desc:'+4 подп. за ролик', base:40, growth:1.5, eff:'subsPost', val:4},
-  {id:'mic', name:'Микрофон', ico:'🎤', desc:'+3 подп. за ролик', base:60, growth:1.55, eff:'subsPost', val:3},
-  {id:'light', name:'Свет', ico:'💡', desc:'+3 подп. за ролик', base:35, growth:1.5, eff:'subsPost', val:3},
-  {id:'chair', name:'Кресло', ico:'🪑', desc:'+2 подп. за ролик', base:150, growth:1.6, eff:'subsPost', val:2},
-  {id:'decor', name:'Декор комнаты', ico:'🎨', desc:'+5% ко всему', base:250, growth:1.75, eff:'global', val:0.05},
-  {id:'drone', name:'Дрон', ico:'🚁', desc:'+10 подп. за ролик', base:800, growth:1.65, eff:'subsPost', val:10},
-  {id:'pc', name:'Монтажный ПК', ico:'💻', desc:'+30% дохода и новые мониторы', base:180, growth:1.7, eff:'moneyMult', val:0.3},
-  {id:'editor', name:'Монтажёр', ico:'✂️', desc:'+25% дохода', base:600, growth:1.75, eff:'moneyMult', val:0.25},
-  {id:'assistant', name:'Помощник', ico:'🧑‍💼', desc:'+3 подп./сек', base:500, growth:1.85, eff:'passSubs', val:3},
-  {id:'manager', name:'Менеджер', ico:'📋', desc:'+6 подп./сек', base:3000, growth:1.9, eff:'passSubs', val:6},
-  {id:'investor', name:'Инвестор', ico:'💼', desc:'+15 ₽/сек', base:1200, growth:1.8, eff:'passMoney', val:15},
-  {id:'studio', name:'Студия', ico:'🎬', desc:'.display+20% ко всему', base: =2000, growth:2.0, eff:'global mic', val:0.2},
-  {id >=:'algo', name:'Знание алгорит мов', ico:'🧮', desc:'+154% ко всему', base:800 ?0, growth:2. '1, eff:'global', val:0.15block},
-  {id:'pr', name:''PR-агент', ico:'🤝', : desc:'-30% шанс скандала ', +10% ко всему', base:500none0, growth:2.0, eff';
-
-:'global', val:0 .1},
-  {id:'satellite', name //:'Спутник-канал', ico свет:'🛰️', desc:'+50 подп. за
- ролик', base:50000, growth: 2.2, eff:'subsPost', val: const50},
-  {id:'empire', light name:'Медиаимперия', ico =:'🏛️', desc:'+50% ко всему u', base:200000, growth:2.4,.l eff:'global', val:0.5}
-];
-
-ightconst PLATFORMS = [
- || {id:'youtube',   name:'0YouTube',   ico:'▶️',;
- subsM:1.0, moneyM: 1.0, req:0,       desc document:'Классика. Баланс.getElementById'},
-  {id:'tiktok',    name:'('TikTok',    ico:'🎵', subssM:1.7, money-lM:0.5, req:500,     descamp:'Больше подписчиков, меньше денег').'},
-  {id:'twitch',   style name:'Twitch',    ico:'🎮', subsM:0.6, moneyM:2.5, req:2500,    desc:'Мало подп., много денег'},
-  {id:'telegram',  name:'Telegram',  ico:'✈️', subsM:1.2, moneyM:1.4, req:10000,   desc:'Стабильный рост + пассив'},
-  {id:'instagram', name:'Instagram', ico:'📸', subsM:1.5, moneyM:1.2, req:50000,   desc:'Вирусный охват'},
-  {id:'meta',      name:'Метавселенная', ico:'🌐', subsM:3.0, moneyM:3.0, req:1000000, desc:'Легендарная платформа'}
-];
-
-const SKILLS = [
-  {id:'viral', name:'Вирусный шанс', ico:'🔥', cost:3, max:5, desc:'+4% шанс вируса (за ур.)'},
-  {id:'combo', name:'Мастер комбо', ico:'⚡', cost:2, max:5, desc:'Комбо множитель +20% (за ур.)'},
-  {id:'energy', name:'Энергичность', ico:'🔋', cost:4, max:5, desc:'+10 макс. энергии'},
-  {id:'offline', name:'Автопилот', ico:'🤖', cost:5, max:1, desc:'Офлайн-доход 50%'},
-  {id:'talent', name:'Талант', ico:'⭐', cost:6, max:10, desc:'+10% ко всему (за ур.)'},
-  {id:'legend', name:'Легенда', ico:'👑', cost:20, max:1, desc:'Всё x2 навсегда'}
-];
-
-const SHOP = [
-  {id:'merch', name:'Мерч', ico:'👕', cost:5000, desc:'Пассивно +1% от подписчиков в ₽/сек'},
-  {id:'sponsor', name:'Спонсор', ico:'💎', cost:25000, desc:'Пассивно +50 ₽/сек'},
-  {id:'school', name:'Своя школа', ico:'🎓', cost:100000, desc:'+30% ко всему пассиву'},
-  {id:'app', name:'Своё приложение', ico:'📲', cost:500000, desc:'+50% подписчиков пассивно'},
-  {id:'brand', name:'Личный бренд', ico:'🏷️', cost:2000000, desc:'Деньги за ролик ×2'}
-];
-
-const ACHS = [
-  {id:'s100', ico:'🥉', n:'Первая сотня', d:'100 подписчиков', check:s=>s.subs>=100},
-  {id:'s1k',  ico:'🥈', n:'Тысячник', d:'1 000 подписчиков', check:s=>s.subs>=1000},
-  {id:'s10k', ico:'🥇', n:'Популярный', d:'10 000 подписчиков', check:s=>s.subs>=10000},
-  {id:'s100k',ico:'💎', n:'Инфлюенсер', d:'100 000 подписчиков', check:s=>s.subs>=100000},
-  {id:'s1m',  ico:'👑', n:'Миллионник', d:'1 000 000 подписчиков', check:s=>s.subs>=1e6},
-  {id:'s10m', ico:'🌍', n:'Мировая звезда', d:'10 000 000 подписчиков', check:s=>s.subs>=1e7},
-  {id:'m10k', ico:'💰', n:'Первые деньги', d:'10 000 ₽ заработано', check:s=>s.money>=10000},
-  {id:'m1m',  ico:'🤑', n:'Миллионер', d:'1 000 000 ₽', check:s=>s.money>=1e6},
-  {id:'p100', ico:'📹', n:'Сотня роликов', d:'100 роликов снято', check:s=>s.posts>=100},
-  {id:'p1k',  ico:'🎬', n:'Тысяча роликов', d:'1 000 роликов', check:s=>s.posts>=1000},
-  {id:'vir1', ico:'🔥', n:'Вирус!', d:'Первый вирусный ролик', check:s=>s.viral>=1},
-  {id:'vir10',ico:'💥', n:'Вирусная машина', d:'10 вирусных роликов', check:s=>s.viral>=10},
-  {id:'pres1',ico:'♻️', n:'Новая жизнь', d:'1 престиж', check:s=>s.prestige>=1},
-  {id:'pres5',ico:'🔮', n:'Реинкарнация', d:'5 престижей', check:s=>s.prestige>=5},
-  {id:'fame50',ico:'⭐', n:'Звёздный', d:'50 славы', check:s=>s.totalFame>=50},
-  {id:'allp', ico:'🌐', n:'Вездесущий', d:'Все платформы открыты', check:s=>s.unlockedPlatforms.length>=PLATFORMS.length}
-];
-
-const EVENTS = [
-  {id:'viral', type:'good', title:'🔥 Ролик завирусился!', text:s=>`Алгоритмы тебя полюбили! +${fmt(passiveSubsBase(s)*30)} подписчиков`, act:s=>{S.subs += passiveSubsBase(s)*30; S.viral++;}},
-  {id:'sponsor', type:'good', title:'💎 Спонсор на связи', text:s=>`Крупный бренд предлагает контракт: +${fmt(Math.max(500,S.subs*0.5))} ₽`, act:s=>{S.money += Math.max(500,S.subs*0.5);}},
-  {id:'trend', type:'good', title:'📈 Ты в трендах!', text:'×2 ко всему на 60 секунд', act:s=>{S.viralBuffUntil = Date.now()+60000;}},
-  {id:'award', type:'good', title:'🏆 Премия блогеров!', text:'+5 славы ⭐', act:s=>{S.fame+=5; S.totalFame+=5;}},
-  {id:'gift', type:'good', title:'🎁 Фанат подарил стрим', text:s=>`+${fmt(Math.max(200,S.money*0.1))} ₽`, act:s=>{S.money += Math.max(200,S.money*0.1);}},
-  {id:'scandal', type:'bad', title:'💥 Скандал!', text:'−25% подписчиков, ×0.5 дохода на 45 сек', act:s=>{S.subs*=0.75; S.scandalUntil=Date.now()+45000; S.scandals++;}},
-  {id:'hack', type:'bad', title:'💻 Хакерская атака', text:s=>`Потеряно ${fmt(S.money*0.15)} ₽`, act:s=>{S.money*=0.85;}},
-  {id:'burnout', type:'bad', title:'😩 Выгорание', text:'Вся энергия иссякла', act:s=>{S.energy=0;}},
-  {id:'shadow', type:'bad', title:'🌑 Теневой бан', text:'×0.4 подписчиков на 30 сек', act:s=>{S.scandalUntil=Date.now()+30000;}},
-  {id:'copy', type:'bad', title:'📋 Конкурент скопировал', text:'−10% подписчиков', act:s=>{S.subs*=0.9;}}
-];
-
-/* ================================================================
-   РАСЧЁТЫ
-================================================================ */
-function boostM(){ return Date.now()<S.boostUntil ? 3 : 1; }
-function viralM(){ return Date.now()<S.viralBuffUntil ? 2 : 1; }
-function scandalM(){ return Date.now()<S.scandalUntil ? 0.5 : 1; }
-function prestigeM(){ return 1 + S.prestige*0.5; }
-function talentM(){ return 1 + (S.skills.talent||0)*0.1; }
-function globalMult(){
-  const u = S.upgrades;
-  let m = 1;
-  for(const up of UPGRADES) if(up.eff==='global') m += (u[up.id]||0)*up.val;
-  if(S.oneTime.school) m *= 1.3;
-  return m * prestigeM() * talentM() * (S.skills.legend?2:1);
-}
-function platformSubsM(){ return (PLATFORMS.find(p=>p.id===S.platform)||PLATFORMS[0]).subsM; }
-function platformMoneyM(){ return (PLATFORMS.find(p=>p.id===S.platform)||PLATFORMS[0]).moneyM; }
-function comboMult(){ return 1 + S.combo * (0.15 + (S.skills.combo||0)*0.03); }
-
-function subsPerPost(){
-  const u = S.upgrades;
-  let base = 5;
-  for(const up of UPGRADES) if(up.eff==='subsPost') base += (u[up.id]||0)*up.val;
-  return base * platformSubsM() * globalMult() * boostM() * viralM() * scandalM() * comboMult();
-}
-function moneyPerPost(){
-  const u = S.upgrades;
-  let m = 1;
-  for(const up of UPGRADES) if(up.eff==='moneyMult') m += (u[up.id]||0)*up.val;
-  if(S.oneTime.brand) m *= 2;
-  return subsPerPost() * 0.5 * m * platformMoneyM();
-}
-function passiveSubsBase(s){
-  const u = S.upgrades;
-  let p = 0;
-  for(const up of UPGRADES) if(up.eff==='passSubs') p += (u[up.id]||0)*up.val;
-  if(S.oneTime.app) p *= 1.5;
-  return p;
-}
-function passiveSubsPerSec(){
-  return passiveSubsBase(S) * globalMult() * platformSubsM() * boostM() * viralM() * scandalM();
-}
-function passiveMoneyPerSec(){
-  const u = S.upgrades;
-  let p = S.subs * 0.0015;
-  for(const up of UPGRADES) if(up.eff==='passMoney') p += (u[up.id]||0)*up.val;
-  if(S.oneTime.merch) p += S.subs * 0.01;
-  if(S.oneTime.sponsor) p += 50;
-  return p * globalMult() * platformMoneyM() * boostM() * scandalM();
-}
-function upgCost(u, lvl){ return Math.floor(u.base * Math.pow(u.growth, lvl)); }
-function boostPrice(){ return Math.floor(200 + S.subs*0.1 + S.posts*10); }
-
-/* ================================================================
-   ОБНОВЛЕНИЕ СЦЕНЫ
-================================================================ */
-const WALL_COLORS = [
-  ['#3a2f4a','#1a0f2a'], // 0 — тёмная спальня
-  ['#4a3a5a','#2a1f3a'], // 1 — чуть лучше
-  ['#3a4a6a','#2a2a4a'], // 2 — с окном
-  ['#4a3a6a','#2a1a4a'], // 3 — LED-подсветка
-  ['#2a2a4a','#1a1a3a'], // 4 — студия
-  ['#3a1a5a','#1a0a2a']  // 5 — элита
-];
-const CHAIR_COLORS = ['#3a2a5a','#4a3a7a','#5a4a9a','#7d5cff','#ff4ec4','#ffd76e'];
-
-function updateScene(){
-  const svg = document.getElementById('scene');
-  if(!svg) return;
-  const u = S.upgrades;
-  const total = Object.values(u).reduce((a,b)=>a+b,0) + S.prestige*4;
-  const tier = Math.min(5, Math.floor(total/8));
-
-  // стены
-  document.getElementById('wallTop').setAttribute('stop-color', WALL_COLORS[tier][0]);
-  document.getElementById('wallBot').setAttribute('stop-color', WALL_COLORS[tier][1]);
-
-  // окно
-  document.getElementById('s-window').style.display = tier >= 2 ? 'block' : 'none';
-  // LED
-  document.getElementById('s-led').style.display = tier >= 3 ? 'block' : 'none';
-  // постеры
-  document.getElementById('s-posters').style.display = tier >= 1 ? 'block' : 'none';
-  // полка
-  document.getElementById('s-shelf').style.display = tier >= 4 ? 'block' : 'none';
-
-  // мониторы
-  const pc = u.pc||0;
-  const monCount = pc===0 ? 1 : pc<3 ? 1 : pc<6 ? 2 : 3;
-  document.getElementById('s-mon2').style.display = monCount >= 2 ? 'block' : 'none';
-  document.getElementById('s-mon3').style.display = monCount >= 3 ? 'block' : 'none';
-
-  // яркость свечения от монитора
-  const glow = document.getElementById('s-glow');
-  glow.setAttribute('opacity', 0.5 + monCount*0.15);
-
-  // камера
-  const cam = u.camera||0;
-  document.getElementById('s-camera').style.display  = (cam >= 1 && cam < 4) ? 'block' : 'none';
-  document.getElementById('s-camera2').style.display = cam >= 4 ? 'block' : 'none';
-
-  // микрофон
-  const mic = u.mic||0;
-  document.getElementById('s-mic').style.display  = (mic >= 1 && mic < 4) ? 'block' : 'none';
-  document.getElementById('s-mic2').style.display    = (light >= 1 && light < 4) ? 'block' : 'none';
-  document.getElementById('s-ring').style.display    = light >= 4 ? 'block' : 'none';
-  document.getElementById('s-softbox').style.display = light >= 7 ? 'block' : 'none';
-
-  // кресло — цвет по уровню
-  const chairEl = document.getElementById('s-chair-back');
-  if(chairEl){
-    const lvl = u.chair||0;
-    chairEl.setAttribute('fill', CHAIR_COLORS[Math.min(5, lvl)]);
-  }
-
-  // RGB на клавиатуре
-  document.getElementById('s-kb-led').style.display = (u.pc||0) >= 3 ? 'block' : 'none';
-
-  // RGB на наушниках
-  document.getElementById('s-hp-rgb').style.display  = tier >= 3 ? 'block' : 'none';
-  document.getElementById('s-hp-rgb2').style.display = tier >= 3 ? 'block' : 'none';
-
-  // смена лица/позы аватара по престижу — меняем цвет волос
-  // (пока просто держим, можно расширить)
-}
-
-/* ================================================================
-   ДЕЙСТВИЯ
-================================================================ */
-let lastTap = 0;
-function doPost(){
-  if(S.energy < 5){ toast('Мало энергии ⚡', '#ff8080'); return; }
-  const now = Date.now();
-  if(now - lastTap < 1400) S.combo = Math.min(50, S.combo + 1); else S.combo = 1;
-  S.comboUntil = now + 1500;
-  lastTap = now;
-
-  S.energy -= 5;
-  S.posts++;
-
-  let subs = subsPerPost();
-  let money = moneyPerPost();
-
-  const viralChance = 0.05 + (S.skills.viral||0)*0.04;
-  if(Math.random() < viralChance){
-    const bonus = subs * 15;
-    S.subs += bonus; S.money += bonus * 2;
-    S.viral++;
-    showPopup('🔥','ВИРУСНЫЙ РОЛИК!', `+${fmt(subs)} подписчиков и бонус ${fmt(bonus)}!`);
-    beep(880,0.1,'triangle',0.08);
-  }
-
-  S.subs += subs;
-  S.money += money;
-
-  floatText(`+${fmt(subs)} 👥`, S.combo>3?'#ffd76e':'#ff7dd6');
-  if(navigator.vibrate) navigator.vibrate(12);
-  beep(200 + Math.min(S.combo,20)*30, 0.04,'square',0.03);
-  render();
-}
-
-function buyUpg(id){
-  const u = UPGRADES.find(x=>x.id===id);
-  const lvl = S.upgrades[id]||0;
-  const c = upgCost(u, lvl);
-  if(S.money < c){ toast('Не хватает денег 💸','#ff8080'); return; }
-  S.money -= c;
-  S.upgrades[id] = lvl + 1;
-  toast(`${u.ico} ${u.name} → ур.${lvl+1}`,'#7dff9b');
-  beep(660,0.07,'sine',0.05);
-  if(navigator.vibrate) navigator.vibrate(18);
-  render();
-}
-function selectPlatform(id){
-  const p = PLATFORMS.find(x=>x.id===id);
-  if(!S.unlockedPlatforms.includes(id)){ toast(`Нужно ${fmt(p.req)} подписчиков`,'#ff8080'); return; }
-  S.platform = id;
-  toast(`Перешёл на ${p.name}`,'#00d4ff');
-  beep(520,0.06); render();
-}
-function buySkill(id){
-  const sk = SKILLS.find(x=>x.id===id);
-  const lvl = S.skills[id]||0;
-  if(lvl >= sk.max) return;
-  const cost = sk.cost * (lvl+1);
-  if(S.fame < cost){ toast('Не хватает славы ⭐','#ff8080'); return; }
-  S.fame -= cost;
-  S.skills[id] = lvl + 1;
-  if(id==='energy') S.maxEnergy += 10;
-  toast(`${sk.ico} ${sk.name} → ур.${lvl+1}`,'#ffd76e');
-  beep(740,0.09,'triangle',0.06); render();
-}
-function buyShop(id){
-  const it = SHOP.find(x=>x.id===id);
-  if(S.oneTime[id]) return;
-  if(S.money < it.cost){ toast('Не хватает денег 💸','#ff8080'); return; }
-  S.money -= it.cost;
-  S.oneTime[id] = 1;
-  toast(`${it.ico} ${it.name} куплено!`,'#7dff9b');
-  beep(880,0.12,'triangle',0.07); render();
-}
-function buyBoost(){
-  if(Date.now() < S.boostUntil) return;
-  const p = boostPrice();
-  if(S.money < p){ toast('Не хватает денег 💸','#ff8080'); return; }
-  S.money -= p;
-  S.boostUntil = Date.now()+30000;
-  toast('📢 Реклама запущена! ×3','#00d4ff'); beep(600,0.1); render();
-}
-function doPrestige(){
-  if(S.subs < 100000){ toast('Нужно 100K подписчиков','#ff8080'); return; }
-  const gain = Math.floor(Math.pow(S.subs/100000, 0.6) * 3) + Math.floor(S.money/500000);
-  showConfirm(`♻️ Престиж`,
-    `Ты потеряешь всё, но получишь <b style="color:#ffd76e">${gain} ⭐ славы</b> навсегда.<br><br>
-     Каждый престиж даёт +50% ко всему и открывает навыки.`,
-    ()=>{
-      S.fame += gain; S.totalFame += gain; S.prestige++;
-      S.money = 0; S.subs = 0;
-      S.energy = S.maxEnergy; S.upgrades = {};
-      S.platform = 'youtube'; S.unlockedPlatforms = ['youtube'];
-      S.posts = 0; S.boostUntil = 0; S.viralBuffUntil = 0; S.scandalUntil = 0;
-      toast(`♻️ Престиж ${S.prestige}! +${gain} ⭐`,'#ffd76e');
-      beep(880,0.2,'triangle',0.1); save(); render();
-    });
-}
-
-/* ================================================================
-   СОБЫТИЯ
-================================================================ */
-function tryRandomEvent(){
-  const roll = Math.random();
-  const good = EVENTS.filter(e=>e.type==='good');
-  const bad = EVENTS.filter(e=>e.type==='bad');
-  const prLevel = S.upgrades.pr||0;
-  const badChance = Math.max(0.15, 0.4 - prLevel*0.06);
-  let ev;
-  if(roll > badChance) ev = good[Math.floor(Math.random()*good.length)];
-  else ev = bad[Math.floor(Math.random()*bad.length)];
-  ev.act(S);
-  showPopup(ev.type==='good'?'✨':'⚠️', ev.title, typeof ev.text==='function'?ev.text(S):ev.text);
-  beep(ev.type==='good'?880:200, 0.15, ev.type==='good'?'triangle':'sawtooth', 0.08);
-  render();
-}
-
-/* ================================================================
-   UI
-================================================================ */
-function fmt(n){
-  n = Math.floor(n);
-  if(n < 1000) return n.toString();
-  if(n < 1e6) return (n/1e3).toFixed(n<1e4?1:2)+'K';
-  if(n < 1e9) return (n/1e6).toFixed(2)+'M';
-  if(n < 1e12) return (n/1e9).toFixed(2)+'B';
-  if(n < 1e15) return (n/1e12).toFixed(2)+'T';
-  return (n/1e15).toFixed(2)+'Q';
-}
-function toast(msg,color){
-  const log = document.getElementById('log');
-  const d = document.createElement('div');
-  d.textContent = msg; d.style.color = color||'#fff';
-  log.prepend(d);
-  while(log.children.length > 8) log.lastChild.remove();
-}
-function floatText(txt,color){
-  const zone = document.getElementById('sceneWrap');
-  const el = document.createElement('div');
-  el.className='float'; el.textContent=txt;
-  el.style.color = color||'#ff7dd6';
-  el.style.left = (50 + (Math.random()*30-15))+'%';
-  el.style.top = '40%';
-  zone.appendChild(el);
-  setTimeout(()=>el.remove(), 1150);
-}
-function showPopup(icon,title,html){
-  document.getElementById('popContent').innerHTML =
-    `<div style="font-size:44px;margin-bottom:6px">${icon}</div>
-     <h2>${title}</h2><p>${html}</p>
-     <button class="btn" onclick="closePopup()">OK</button>`;
-  document.getElementById('popup').classList.add('show');
-}
-function showConfirm(title,html,cb){
-  window._confirmCb = cb;
-  document.getElementById('popContent').innerHTML =
-    `<h2>${title}</h2><p>${html}</p>
-     <button class="btn alt" onclick="doConfirm()">Подтвердить</button>
-     <button class="btn" onclick="closePopup()">Отмена</button>`;
-  document.getElementById('popup').classList.add('show');
-}
-function doConfirm(){ closePopup(); if(window._confirmCb) window._confirmCb(); }
-function closePopup(){ document.getElementById('popup').classList.remove('show'); }
-
-let curTab = 'home';
-function switchTab(t){
-  curTab = t;
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.getElementById('v-'+t).classList.add('active');
-  document.querySelectorAll('#tabs .tab').forEach(x=>x.classList.toggle('on', x.dataset.t===t));
-  render();
-}
-
-function render(){
-  document.getElementById('m').textContent = fmt(S.money)+' ₽';
-  document.getElementById('s').textContent = fmt(S.subs);
-  document.getElementById('f').textContent = fmt(S.fame);
-  const ep = Math.min(100, S.energy/S.maxEnergy*100);
-  document.getElementById('ef').style.width = ep+'%';
-  document.getElementById('el').textContent = `${Math.floor(S.energy)}/${S.maxEnergy} ⚡`;
-
-  document.getElementById('hint').textContent =
-    `+${fmt(subsPerPost())} 👥 · +${fmt(moneyPerPost())} ₽ за ролик`;
-
-  if(Date.now() < S.comboUntil && S.combo > 1){
-    document.getElementById('combo').textContent = `🔥 КОМБО x${S.combo} (${comboMult().toFixed(2)}×)`;
-  } else {
-    document.getElementById('combo').textContent = '';
-    if(S.combo > 1 && Date.now() >= S.comboUntil) S.combo = 0;
-  }
-
-  const bb = document.getElementById('boost');
-  if(Date.now() < S.boostUntil){
-    bb.disabled = true; bb.classList.add('active');
-    bb.textContent = `📢 Реклама активна (${Math.ceil((S.boostUntil-Date.now())/1000)}с)`;
-  } else {
-    bb.disabled = false; bb.classList.remove('active');
-    bb.textContent = `📢 Реклама ×3 (30с) — ${fmt(boostPrice())} ₽`;
-  }
-
-  updateScene();
-
-  if(curTab === 'upg') renderUpg();
-  if(curTab === 'plat') renderPlat();
-  if(curTab === 'skill') renderSkill();
-  if(curTab === 'shop') renderShop();
-  if(curTab === 'ach') renderAch();
-  if(curTab === 'stat') renderStat();
-  if(curTab === 'pres') renderPres();
-}
-
-function renderUpg(){
-  const el = document.getElementById('upgList');
-  el.innerHTML = '';
-  for(const u of UPGRADES){
-    const lvl = S.upgrades[u.id]||0;
-    const c = upgCost(u, lvl);
-    const can = S.money >= c;
-    const d = document.createElement('div');
-    d.className = 'up ' + (can?'can':'lock');
-    d.innerHTML = `<div class="ico">${u.ico}</div>
-      <div class="info"><div class="name">${u.name}<span class="lvl">ур.${lvl}</span></div>
-      <div class="desc">${u.desc}</div></div>
-      <div class="cost">${fmt(c)} ₽</div>`;
-    d.onclick = ()=>buyUpg(u.id);
-    el.appendChild(d);
-  }
-}
-function renderPlat(){
-  const el = document.getElementById('platList');
-  el.innerHTML = '';
-  for(const p of PLATFORMS){
-    const unlocked = S.unlockedPlatforms.includes(p.id) || S.subs >= p.req;
-    if(unlocked && !S.unlockedPlatforms.includes(p.id)) S.unlockedPlatforms.push(p.id);
-    const sel = S.platform === p.id;
-    const d = document.createElement('div');
-    d.className = 'plat ' + (sel?'sel':'') + (unlocked?'':' locked');
-    d.innerHTML = `<div class="ico">${p.ico}</div>
-      <div class="info"><div class="name">${p.name}${sel?' <span class="badge">выбрано</span>':''}</div>
-      <div class="mult">${p.desc} · 👥×${p.subsM} · ₽×${p.moneyM}${unlocked?'':' · нужно '+fmt(p.req)}</div></div>`;
-    d.onclick = ()=>selectPlatform(p.id);
-    el.appendChild(d);
-  }
-}
-function renderSkill(){
-  const el = document.getElementById('skillList');
-  el.innerHTML = '';
-  for(const sk of SKILLS){
-    const lvl = S.skills[sk.id]||0;
-    const maxed = lvl >= sk.max;
-    const cost = sk.cost * (lvl+1);
-    const can = !maxed && S.fame >= cost;
-    const d = document.createElement('div');
-    d.className = 'up ' + (maxed?'owned':(can?'can':'lock'));
-    d.innerHTML = `<div class="ico">${sk.ico}</div>
-      <div class="info"><div class="name">${sk.name}<span class="lvl">ур.${lvl}/${sk.max}</span></div>
-      <div class="desc">${sk.desc}</div></div>
-      <div class="cost">${maxed?'✅':fmt(cost)+' ⭐'}</div>`;
-    d.onclick = ()=>{ if(!maxed) buySkill(sk.id); };
-    el.appendChild(d);
-  }
-}
-function renderShop(){
-  const el = document.getElementById('shopList');
-  el.innerHTML = '';
-  for(const it of SHOP){
-    const owned = !!S.oneTime[it.id];
-    const can = !owned && S.money >= it.cost;
-    const d = document.createElement('div');
-    d.className = 'up ' + (owned?'owned':(can?'can':'lock'));
-    d.innerHTML = `<div class="ico">${it.ico}</div>
-      <div class="info"><div class="name">${it.name}${owned?' <span class="badge">куплено</span>':''}</div>
-      <div class="desc">${it.desc}</div></div>
-      <div class="cost">${owned?'✅':fmt(it.cost)+' ₽'}</div>`;
-    d.onclick = ()=>buyShop(it.id);
-    el.appendChild(d);
-  }
-}
-function renderAch(){
-  const el = document.getElementById('achList');
-  el.innerHTML = '';
-  for(const a of ACHS){
-    const done = !!S.achievements[a.id];
-    if(!done && a.check(S)){ S.achievements[a.id] = 1; toast(`🏆 ${a.n}!`,'#ffd76e'); }
-    const d = document.createElement('div');
-    d.className = 'ach' + (done?' done':'');
-    d.innerHTML = `<div class="ico">${a.ico}</div>
-      <div><div class="n">${a.n}</div><div class="d">${a.d}</div></div>`;
-    el.appendChild(d);
-  }
-}
-function renderStat(){
-  const el = document.getElementById('statList');
-  const minutes = Math.floor(S.playtime/60);
-  const hours = Math.floor(minutes/60);
-  el.innerHTML = `
-    <div class="stat-row"><span>👥 Подписчиков</span><b>${fmt(S.subs)}</b></div>
-    <div class="stat-row"><span>💰 Денег</span><b>${fmt(S.money)} ₽</b></div>
-    <div class="stat-row"><span>⭐ Славы</span><b>${fmt(S.fame)}</b></div>
-    <div class="stat-row"><span>♻️ Престижей</span><b>${S.prestige}</b></div>
-    <div class="stat-row"><span>📹 Роликов снято</span><b>${fmt(S.posts)}</b></div>
-    <div class="stat-row"><span>🔥 Вирусных роликов</span><b>${S.viral}</b></div>
-    <div class="stat-row"><span>💥 Скандалов</span><b>${S.scandals}</b></div>
-    <div class="stat-row"><span>📈 Всё множитель</span><b>×${globalMult().toFixed(2)}</b></div>
-    <div class="stat-row"><span>📱 Платформа</span><b>${(PLATFORMS.find(p=>p.id===S.platform)||{}).name}</b></div>
-    <div class="stat-row"><span>⏱️ В игре</span><b>${hours}ч ${minutes%60}м</b></div>
-    <div class="stat-row"><span>👥 Пассив подп./сек</span><b>${fmt(passiveSubsPerSec())}</b></div>
-    <div class="stat-row"><span>💰 Пассив ₽/сек</span><b>${fmt(passiveMoneyPerSec())}</b></div>
-    <div class="stat-row"><span>🏆 Достижений</span><b>${Object.keys(S.achievements).length}/${ACHS.length}</b></div>
-    <div class="stat-row"><span>📅 День</span><b>${S.day}</b></div>`;
-}
-function renderPres(){
-  const el = document.getElementById('presList');
-  const can = S.subs >= 100000;
-  const gain = Math.floor(Math.pow(S.subs/100000, 0.6) * 3) + Math.floor(S.money/500000);
-  el.innerHTML = `
-    <div class="prestige-box">
-      <div style="font-size:12px;opacity:.7;margin-bottom:4px">Текущий престиж</div>
-      <div class="big">${S.prestige}</div>
-      <div style="font-size:12px;opacity:.7;margin-top:6px">Бонус: +${S.prestige*50}% ко всему</div>
-    </div>
-    <div class="stat-row"><span>Получишь славы</span><b>${can?gain:0} ⭐</b></div>
-    <div class="stat-row"><span>Требуется подписчиков</span><b>100K</b></div>
-    <div class="stat-row" style="margin-bottom:12px"><span>Сейчас</span><b>${fmt(S.subs)}</b></div>
-    <button class="btn ${can?'danger':''}" ${can?'':'disabled'} onclick="doPrestige()">
-      ♻️ Совершить престиж
-    </button>
-    <div class="sec">Что даёт престиж</div>
-    <div class="up"><div class="ico">⭐</div><div class="info"><div class="name">Слава</div><div class="desc">Валюта для дерева навыков</div></div></div>
-    <div class="up"><div class="ico">📈</div><div class="info"><div class="name">+50% ко всему</div><div class="desc">За каждый престиж</div></div></div>
-    <div class="up"><div class="ico">🎭</div><div class="info"><div class="name">Новая жизнь</div><div class="desc">Студия меняется, растёт визуально</div></div></div>`;
-}
-
-/* ================================================================
-   ЦИКЛ
-================================================================ */
-let last = performance.now();
-function loop(now){
-  const dt = Math.min(0.5, (now-last)/1000);
-  last = now;
-  S.playtime += dt;
-
-  S.energy = Math.min(S.maxEnergy, S.energy + dt * (2 + (S.prestige*0.2)));
-  S.subs += passiveSubsPerSec() * dt;
-  S.money += passiveMoneyPerSec() * dt;
-
-  S.nextEventIn -= dt;
-  if(S.nextEventIn <= 0){ tryRandomEvent(); S.nextEventIn = 45 + Math.random()*45; }
-
-  if(Math.floor(S.playtime/120) + 1 > S.day) S.day = Math.floor(S.playtime/120) + 1;
-
-  if(Math.floor(now/1000) !== Math.floor((now-dt*1000)/1000)){
-    for(const a of ACHS){
-      if(!S.achievements[a.id] && a.check(S)){
-        S.achievements[a.id] = 1;
-        toast(`🏆 ${a.n}!`,'#ffd76e');
-        beep(1000,0.15,'triangle',0.08);
-      }
-    }
-  }
-
-  render();
-  requestAnimationFrame(loop);
-}
-
-/* ================================================================
-   СОХРАНЕНИЕ
-================================================================ */
-function save(){
-  S.lastSave = Date.now();
-  try{ localStorage.setItem('blogger2_save', JSON.stringify(S)); }catch(e){}
-}
-function load(){
-  try{
-    const raw = localStorage.getItem('blogger2_save');
-    if(!raw) return JSON.parse(JSON.stringify(DEFAULT));
-    const d = JSON.parse(raw);
-    const merged = Object.assign({}, JSON.parse(JSON.stringify(DEFAULT)), d);
-    const offSec = Math.min(8*3600, (Date.now() - (d.lastSave||Date.now()))/1000);
-    if(d.skills && d.skills.offline && offSec > 60){
-      const subsGain = (Object.values(d.upgrades||{}).reduce((a,b)=>a+b,0)) * offSec * 0.5;
-      merged.subs = (merged.subs||0) + subsGain;
-      merged.money = (merged.money||0) + (d.subs||0) * 0.0015 * offSec * 0.5;
-      setTimeout(()=>showPopup('💤','С возвращением!',
-        `Тебя не было ${Math.floor(offSec/60)} мин.<br>Заработано офлайн:<br>
-         <b style="color:#7dff9b">+${fmt(merged.money-(d.money||0))} ₽</b><br>
-         <b style="color:#ff7dd6">+${fmt(merged.subs-(d.subs||0))} 👥</b>`), 300);
-    }
-    return merged;
-  }catch(e){ return JSON.parse(JSON.stringify(DEFAULT)); }
-}
-
-/* ================================================================
-   ИНИТ
-================================================================ */
-document.getElementById('sceneWrap').onclick = doPost;
-document.getElementById('boost').onclick = buyBoost;
-document.querySelectorAll('#tabs .tab').forEach(t=>{
-  t.onclick = ()=>switchTab(t.dataset.t);
-});
-document.getElementById('popup').onclick = (e)=>{ if(e.target.id==='popup') closePopup(); };
-
-setInterval(save, 5000);
-window.addEventListener('beforeunload', save);
-
-render();
-requestAnimationFrame(loop);
-toast('Добро пожаловать в Блогер 2.0! 🚀','#7dff9b');
-toast('Тапай по сцене — снимай контент!','#ffd76e');
-</script>
-</body>
-</html>
+            <rect x="232" y="
